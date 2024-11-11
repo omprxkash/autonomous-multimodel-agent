@@ -1,0 +1,38 @@
+weights:
+  industry_match: 30
+  size_fit: 25
+  seniority: 20
+  tech_match: 15
+  geo_fit: 10
+
+ideal:
+  industries:
+    - saas
+    - fintech
+    - devtools
+    - data
+    - cloud
+  size_min: 50
+  size_max: 1000
+  seniorities:
+    - founder
+    - ceo
+    - cto
+    - vp
+    - head
+    - director
+    - chief
+  tech:
+    - python
+    - postgres
+    - aws
+    - react
+    - fastapi
+    - kubernetes
+    - docker
+  regions:
+    - US
+    - EU
+    - UK
+    - CA
+
