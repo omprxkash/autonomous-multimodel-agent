@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { setToken } from "@/lib/auth";
 
 export default function AuthCallback() {
   const params = useSearchParams();
@@ -10,8 +9,15 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const token = params.get("token");
+    const userId = params.get("user_id");
+    const isSetupComplete = params.get("is_setup_complete");
+    const warning = params.get("warning");
+
     if (token) {
-      setToken(token);
+      localStorage.setItem("dp_token", token);
+      if (userId) localStorage.setItem("dp_user_id", userId);
+      if (isSetupComplete !== null) localStorage.setItem("dp_setup", isSetupComplete);
+      if (warning) localStorage.setItem("dp_warning", decodeURIComponent(warning));
       router.replace("/");
     } else {
       router.replace("/?error=auth_failed");
