@@ -225,6 +225,56 @@ def calculate_risk_score(features: Dict[str, float], context: Optional[Dict] = N
     return result
 
 
+# ---------------------------------------------------------------------------
+# Human-readable indicator detail builder
+# ---------------------------------------------------------------------------
+
+_DETAIL_TEMPLATES: Dict[str, str] = {
+    "spf_fail": "SPF record check failed — sender's IP is not authorised by the domain's SPF policy.",
+    "dkim_fail": "DKIM signature verification failed — message content may have been tampered with in transit.",
+    "dmarc_fail": "DMARC policy check failed — neither SPF nor DKIM alignment passes for this domain.",
+    "reply_to_mismatch": "Reply-To address differs from the From address — replies will go to a different domain.",
+    "contains_ip_address": "URL contains a raw IP address instead of a domain name, a common evasion technique.",
+    "url_shortened": "URL uses a shortening service that hides the true destination.",
+    "domain_very_recent": "Sending domain was registered less than 7 days ago — very high-risk registration pattern.",
+    "domain_recent_registration": "Sending domain was registered within the last 30 days.",
+    "openphish_match": "URL matched an entry in the OpenPhish live phishing feed.",
+    "phishtank_match": "URL is listed as a verified phishing site in the PhishTank database.",
+    "urlhaus_match": "URL appears in the URLhaus malware distribution feed.",
+    "domain_blacklisted": "Domain is listed in one or more threat intelligence feeds.",
+    "ip_blacklisted": "Originating IP address has a high AbuseIPDB confidence score (≥ 50).",
+    "brand_sender_domain_mismatch": "Sender domain appears to impersonate a known brand via typosquatting.",
+    "brand_homograph_detected": "Domain contains Unicode characters that visually resemble ASCII letters (homograph attack).",
+    "has_executable_attachment": "Email contains an attachment with an executable extension (.exe, .msi, .bat, etc.).",
+    "has_macro_document": "Attachment is a macro-enabled Office document (.docm, .xlsm, .pptm).",
+    "double_extension_detected": "Attachment filename uses a double extension (e.g. invoice.pdf.exe) to disguise its type.",
+    "display_name_brand_spoofing": "Display name in the From header impersonates a known brand while using a different domain.",
+    "urgency_keyword_count": "Message body contains urgency-inducing language (e.g. 'act now', 'immediately', 'urgent').",
+    "credential_request_keywords": "Message explicitly requests credentials, passwords, or account verification.",
+    "financial_request_keywords": "Message contains financial lure language (wire transfer, payment, invoice).",
+    "javascript_in_email": "HTML body contains JavaScript, which is not rendered by email clients but can exfiltrate data.",
+    "hidden_links_detected": "HTML body contains links styled with display:none or visibility:hidden.",
+    "redirect_count": "URL goes through one or more HTTP redirects before reaching the final destination.",
+    "final_domain_mismatch": "The final URL domain after redirects differs from the initial domain.",
+    "meta_refresh_detected": "HTML body uses a meta-refresh tag to redirect the browser automatically.",
+}
+
+
+def _build_detail(indicator_type: str) -> str:
+    """Return a human-readable explanation for an indicator type."""
+    return _DETAIL_TEMPLATES.get(
+        indicator_type,
+        f"Suspicious signal detected: {indicator_type.replace('_', ' ')}.",
+    )
+
+
+def enrich_indicators(indicators: List[Dict]) -> List[Dict]:
+    """Add human-readable 'detail' field to each indicator dict."""
+    for ind in indicators:
+        ind.setdefault("detail", _build_detail(ind.get("indicator_type", "")))
+    return indicators
+
+
 # Legacy dict interface used by existing tasks.py
 def compute_score(
     header_results: dict,

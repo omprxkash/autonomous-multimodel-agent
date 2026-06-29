@@ -12,6 +12,7 @@ class Settings(BaseSettings):
 
     PHISHTANK_API_KEY: Optional[str] = None
     URLHAUS_AUTH_KEY: Optional[str] = None
+    ABUSEIPDB_API_KEY: Optional[str] = None   # IP reputation (degrades gracefully if absent)
 
     MAX_FILE_SIZE_MB: int = 5
     DEBUG: bool = False
