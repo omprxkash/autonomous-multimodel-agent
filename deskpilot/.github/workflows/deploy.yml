@@ -1,0 +1,82 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+  BACKEND_IMAGE: deskpilot-backend
+  FRONTEND_IMAGE: deskpilot-frontend
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push backend image
+        working-directory: deskpilot/backend
+        run: |
+          IMAGE=$ECR_REGISTRY/$BACKEND_IMAGE:$GITHUB_SHA
+          docker build -t $IMAGE .
+          docker push $IMAGE
+          echo "BACKEND_IMAGE_URI=$IMAGE" >> $GITHUB_ENV
+
+      - name: Build and push frontend image
+        working-directory: deskpilot/frontend
+        run: |
+          IMAGE=$ECR_REGISTRY/$FRONTEND_IMAGE:$GITHUB_SHA
+          docker build -t $IMAGE \
+            --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} .
+          docker push $IMAGE
+          echo "FRONTEND_IMAGE_URI=$IMAGE" >> $GITHUB_ENV
+
+  deploy-ecs:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Update ECS service — backend
+        run: |
+          aws ecs update-service \
+            --cluster deskpilot-cluster \
+            --service deskpilot-backend \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Update ECS service — frontend
+        run: |
+          aws ecs update-service \
+            --cluster deskpilot-cluster \
+            --service deskpilot-frontend \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Wait for stability
+        run: |
+          aws ecs wait services-stable \
+            --cluster deskpilot-cluster \
+            --services deskpilot-backend deskpilot-frontend \
+            --region ${{ env.AWS_REGION }}

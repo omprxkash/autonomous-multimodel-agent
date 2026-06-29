@@ -1,0 +1,59 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./infrastructure/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+      - frontend
+
+  backend:
+    build: ./backend
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://mailrecon:mailrecon@postgres:5432/mailrecon
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  celery-worker:
+    build: ./backend
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://mailrecon:mailrecon@postgres:5432/mailrecon
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+    command: celery -A app.core.celery_app.celery worker --loglevel=info -Q email,url
+
+  frontend:
+    build: ./frontend
+    environment:
+      - NODE_ENV=production
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mailrecon
+      POSTGRES_PASSWORD: mailrecon
+      POSTGRES_DB: mailrecon
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
