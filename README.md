@@ -1,66 +1,84 @@
-> For system architecture and how all projects connect — [ARCHITECTURE.md](ARCHITECTURE.md)
+![mail-phis tests](https://github.com/omprxkash/autonomous-multimodel-agent/actions/workflows/test-mail-phis.yml/badge.svg)
 
 # autonomous-multimodel-agent
 
-Autonomous AI agent systems — multi-model orchestration and real-world agentic pipelines.
+Five production-grade AI projects forming a complete, layered agent infrastructure — from routing and pipelines to workspace automation, phishing detection, and outreach.
+
+For architecture and cross-project connections → [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ---
 
 ## Projects
 
 ### `model-router/`
-A shared LLM dispatcher that routes tasks to the right model based on task type, cost, and latency. Classification tasks go to fast/cheap models; reasoning and generation tasks go to capable ones. Exposes a `/invoke` API that any project in this repo can call instead of hitting a model directly.
+Shared LLM dispatcher. Routes by task type (classification, summarisation, reasoning, generation, coding), picks the right model, and returns the response with token count, cost estimate, and latency. Rate-limited at 30 req/min per IP.
 
 ```
-Task → Classify type → Select model → Invoke → Return response + cost metadata
+Task type → Select model + provider → Invoke → Response + cost + latency
 ```
+
+**Stack:** FastAPI · langchain-google-genai · langchain-openai · slowapi · Docker
 
 ---
 
 ### `multi-step-agent/`
-An autonomous content research pipeline. Given a research goal, the agent plans search queries, fetches web results, filters by relevance, summarises each source, builds an outline, and writes a first draft — all without human intervention at each step.
+Autonomous content research pipeline built on LangGraph. Given a goal, the agent plans searches, fetches results, filters by relevance, summarises each source, builds an outline, and drafts the final piece — no human steps between them.
 
 ```
 Planner → Search → Filter → Summarise → Outline → Draft
 ```
 
-Key features: LangGraph straight-chain graph · DuckDuckGo search (no API key) · step-by-step trace visible in the dashboard · React frontend with live step status · Docker setup
+**Stack:** LangGraph · DuckDuckGo search · FastAPI · React · Docker
 
 ---
 
 ### `deskpilot/`
-An autonomous AI Chief of Staff that integrates with Google Workspace (Gmail + Calendar). Reads and drafts emails, manages your calendar, learns your preferences via semantic memory, and surfaces phishing risk scores on incoming mail.
+AI Chief of Staff with Google Workspace integration. Reads and drafts emails, manages calendar, stores preferences in semantic memory, and flags phishing risk on every inbox message.
 
 ```
-Gmail / Calendar → LangGraph 6-node agent → Draft card (human confirms before send)
+Gmail / Calendar → LangGraph 6-node ReAct agent → Draft (human confirms before send)
 ```
 
-Key features: LangGraph ReAct loop · Gemini 2.0 Flash / OpenAI switchable · pgvector semantic memory · SSE streaming chat · Gmail push notifications (Pub/Sub webhook) · mail-phis risk scoring on inbox · AWS ECS + Terraform IaC · GitHub Actions CI/CD
+**Key features:** pgvector semantic memory · SSE streaming · Gmail Pub/Sub push notifications · mail-phis inbox scoring · OpenTelemetry tracing · MCP server (search_gmail, read_email, list_calendar_events) · AWS ECS + Terraform IaC
+
+**Stack:** LangGraph · FastAPI · pgvector · Google OAuth · OpenTelemetry · Terraform · Docker
 
 ---
 
 ### `ai-lead-generation/`
-A B2B lead-generation pipeline: scrapes company pages, scores prospects against an ideal customer profile, drafts personalised outreach emails, tracks the full pipeline on a Kanban board, and schedules automatic follow-up sequences.
+B2B outreach pipeline: scrapes company pages, scores prospects against a weighted ICP (industry, company size, seniority, tech stack, geography), drafts personalised emails with Jinja2 or an LLM, tracks leads on a Kanban board, and schedules follow-up sequences automatically.
 
 ```
-Scrape → Enrich → Score → Draft outreach → Send → Follow-up sequences → Track (Kanban)
+Scrape → Enrich → ICP score → Draft email → Kanban → Follow-up sequences
 ```
 
-Key features: transparent ICP scoring (industry / size / seniority / tech / geo) · Jinja2 outreach templates · follow-up scheduling with stage tracking · drag-and-drop pipeline board · full Docker setup
+**Key features:** transparent per-factor score breakdown · LLM email drafting (Gemini / GPT-4o, set `use_llm=true`) · Celery Beat follow-up scheduling · optional SendGrid delivery · end-to-end demo script (`scripts/demo.py`)
+
+**Stack:** FastAPI · LangChain · Celery · SQLAlchemy · React · Docker
 
 ---
 
 ### `mail-phis/`
-SOC-grade phishing detection pipeline for email and URL analysis. Parses raw MIME messages through a 9-stage forensic pipeline — authentication verification, URL threat intelligence, NLP social engineering detection, and attachment risk scoring — and returns a structured verdict with an exportable IOC bundle.
+SOC-grade phishing detection for raw MIME email. Nine-stage forensic pipeline: header analysis, SPF/DKIM/DMARC verification, URL threat intelligence, domain age, homograph detection, NLP social-engineering scoring, attachment risk, dual-bucket scoring, IOC export.
 
 ```
-Raw email → 9-stage pipeline → Verdict (SAFE / MARKETING / SUSPICIOUS / PHISHING) + IOC bundle
+Raw MIME → 9-stage pipeline → Verdict (SAFE / MARKETING / SUSPICIOUS / PHISHING) + IOC bundle
 ```
 
-Key features: dual-bucket risk scoring (suspicion − trust, 0–100) · content-only NLP capped at SUSPICIOUS · STIX2-compatible IOC export · concurrent threat intel (OpenPhish / PhishTank / URLhaus) · RTLO + homograph detection · async redirect chain tracing
+**Key features:** dual-bucket scoring (suspicion − trust, 0–100) · content-only NLP capped at SUSPICIOUS · STIX2 IOC export · concurrent OpenPhish / PhishTank / URLhaus lookups · 16 pytest tests (CI passing)
+
+**Stack:** FastAPI · asyncpg · Celery · Docker
 
 ---
 
 ## Stack
 
-Python · LangGraph · LangChain · FastAPI · React · Next.js · PostgreSQL · Redis · Celery · Docker
+| Layer | Technology |
+|---|---|
+| Agent framework | LangGraph · LangChain |
+| API | FastAPI |
+| Database | PostgreSQL · pgvector · SQLAlchemy |
+| Background tasks | Celery · Redis |
+| Frontend | React · Next.js |
+| Observability | OpenTelemetry |
+| Infrastructure | Docker · Terraform · AWS ECS |
