@@ -1,3 +1,5 @@
+![mail-phis tests](https://github.com/omprxkash/autonomous-multimodel-agent/actions/workflows/test-mail-phis.yml/badge.svg)
+
 # mail-phis
 
 SOC-grade phishing detection pipeline for email and URL analysis. Parses raw MIME messages through a 9-stage forensic pipeline — authentication verification, URL threat intelligence, NLP social engineering detection, and attachment risk scoring — and returns a structured verdict with an exportable IOC bundle.
