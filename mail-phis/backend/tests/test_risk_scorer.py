@@ -1,6 +1,7 @@
 import pytest
 from app.services.risk_scorer import calculate_risk_score, RiskScoringResult
 
+
 def test_clean_email_is_safe():
     features = {
         "spf_pass": 1.0, "dkim_pass": 1.0, "dmarc_pass": 1.0,
@@ -11,11 +12,22 @@ def test_clean_email_is_safe():
     assert result.verdict == "SAFE"
     assert result.risk_score < 20
 
-def test_threat_feed_hit_is_phishing():
-    features = {"openphish_match": 1.0}
+
+def test_threat_feed_plus_auth_failure_is_phishing():
+    # openphish_match (50pts) + dmarc_fail (30pts) = 80 -> PHISHING
+    features = {"openphish_match": 1.0, "dmarc_fail": 1.0}
     result = calculate_risk_score(features)
     assert result.verdict == "PHISHING"
     assert result.risk_score >= 75
+
+
+def test_threat_feed_alone_raises_suspicion():
+    # openphish_match alone = 50pts -> SUSPICIOUS (not PHISHING without auth signal)
+    features = {"openphish_match": 1.0}
+    result = calculate_risk_score(features)
+    assert result.verdict in ("SUSPICIOUS", "PHISHING")
+    assert result.risk_score >= 50
+
 
 def test_content_only_nlp_capped_at_suspicious():
     features = {
@@ -28,20 +40,24 @@ def test_content_only_nlp_capped_at_suspicious():
     assert result.verdict in ("MARKETING", "SUSPICIOUS")
     assert result.risk_score < 75, "Content-only signals must not reach PHISHING"
 
+
 def test_auth_failure_raises_score():
     features = {"dmarc_fail": 1.0, "dkim_fail": 1.0, "spf_fail": 1.0}
     result = calculate_risk_score(features)
     assert result.risk_score > 20
+
 
 def test_newly_registered_domain_is_high_risk():
     features = {"domain_very_recent": 1.0, "dmarc_fail": 1.0}
     result = calculate_risk_score(features)
     assert result.risk_score >= 50
 
+
 def test_executable_attachment_raises_risk():
     features = {"has_executable_attachment": 1.0, "dkim_fail": 1.0}
     result = calculate_risk_score(features)
     assert result.risk_score >= 50
+
 
 def test_trust_signals_reduce_score():
     features = {
@@ -55,11 +71,13 @@ def test_trust_signals_reduce_score():
     result = calculate_risk_score(features)
     assert result.verdict in ("SAFE", "MARKETING")
 
+
 def test_top_contributors_present():
     features = {"openphish_match": 1.0, "dmarc_fail": 1.0}
     result = calculate_risk_score(features)
     assert len(result.top_contributors) > 0
     assert all("feature_name" in c for c in result.top_contributors)
+
 
 def test_indicators_sorted_by_severity():
     features = {"openphish_match": 1.0, "url_shortened": 1.0}
