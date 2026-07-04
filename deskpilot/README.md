@@ -15,6 +15,7 @@ A production-grade AI Chief of Staff platform built with Python (LangGraph), Nex
 - **Human-in-the-loop** — all write actions (emails, events) surface as interactive draft cards before execution
 - **Intent classification** — 6-node LangGraph graph classifies query/action/chat before routing
 - **AI reply suggestions** — three AI-generated reply drafts (quick / standard / detailed) for any email
+- **MCP server** — exposes Gmail search, email reading, and Calendar listing as Model Context Protocol tools (`python -m app.mcp_server`), allowing any MCP-compatible client to control the agent
 
 ---
 
@@ -214,6 +215,8 @@ The Postgres container automatically loads `init-pgvector.sql` which runs `CREAT
 | `REDIS_URL` | No | `redis://localhost:6379/0` | Falls back to in-memory if unavailable |
 | `SECRET_KEY` | Yes | — | JWT signing secret |
 | `FRONTEND_URL` | No | `http://localhost:3000` | Used in OAuth redirect |
+| `GMAIL_ACCESS_TOKEN`  | MCP server single-user Gmail access |
+| `GMAIL_REFRESH_TOKEN` | MCP server token refresh |
 
 ---
 
