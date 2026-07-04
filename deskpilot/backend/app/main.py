@@ -4,9 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from app.core.config import settings
 from app.core.database import init_db, engine
+from app.core.telemetry import setup_telemetry
 from app.api import auth, chat
 from app.api import stream, users, email, calendar
 from app.api.webhooks import router as webhooks_router
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 
 @asynccontextmanager
@@ -27,6 +29,7 @@ async def lifespan(app: FastAPI):
                 await conn.execute(text(stmt))
             except Exception as exc:
                 pass  # column already exists or table not yet created
+    setup_telemetry()
     await init_db()
     yield
 
@@ -42,6 +45,8 @@ app = FastAPI(
     docs_url="/docs" if settings.DEBUG else None,
     lifespan=lifespan,
 )
+
+FastAPIInstrumentor.instrument_app(app)
 
 app.add_middleware(
     CORSMiddleware,

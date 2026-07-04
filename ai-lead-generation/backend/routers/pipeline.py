@@ -8,6 +8,7 @@ from pipeline.scraper import scrape_mock, scrape_urls
 from pipeline.enricher import enrich_all
 from pipeline.icp_scorer import score_all
 from pipeline.email_generator import generate
+from pipeline.email_generator_llm import generate_llm
 
 router = APIRouter(prefix="/pipeline", tags=["pipeline"])
 
@@ -33,14 +34,20 @@ def run_pipeline(body: PipelineRunRequest, db: Session = Depends(get_db)):
         if existing:
             existing.score = result["score"]
             existing.score_breakdown = result["breakdown"]
-            existing.email_draft = generate(enriched_lead, result["score"])
+            existing.email_draft = (
+                generate_llm(enriched_lead, result["score"], result["breakdown"])
+                if body.use_llm else generate(enriched_lead, result["score"])
+            )
             existing.stage = "scored"
             db.commit()
             db.refresh(existing)
             saved.append(existing)
             continue
 
-        email_draft = generate(enriched_lead, result["score"])
+        email_draft = (
+            generate_llm(enriched_lead, result["score"], result["breakdown"])
+            if body.use_llm else generate(enriched_lead, result["score"])
+        )
         lead = Lead(
             company=enriched_lead.company,
             domain=enriched_lead.domain,

@@ -11,6 +11,7 @@ from typing import Any, Optional
 from langchain_core.messages import SystemMessage, AIMessage, HumanMessage, ChatPromptTemplate
 from langgraph.prebuilt import ToolNode
 from app.core.config import settings
+from app.core.telemetry import tracer
 from app.agent.state import AgentState
 from app.agent.tools import ALL_TOOLS
 
@@ -139,7 +140,10 @@ async def reason_node(state: AgentState) -> dict:
         }
 
     system = SystemMessage(content=_build_system_prompt(state))
-    response = await get_llm().ainvoke([system] + list(state["messages"]))
+    with tracer.start_as_current_span("agent.reason") as span:
+        span.set_attribute("intent", state.get("intent", ""))
+        response = await get_llm().ainvoke([system] + list(state["messages"]))
+        span.set_attribute("tool_calls", len(getattr(response, "tool_calls", []) or []))
 
     updates: dict = {"messages": [response]}
     if not (hasattr(response, "tool_calls") and response.tool_calls):

@@ -35,6 +35,7 @@ class StageUpdate(BaseModel):
 class PipelineRunRequest(BaseModel):
     mock: bool = True
     urls: list[str] = Field(default_factory=list)
+    use_llm: bool = False
 
 
 class PipelineRunResponse(BaseModel):
