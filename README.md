@@ -1,3 +1,5 @@
+> For system architecture and how all projects connect — [ARCHITECTURE.md](ARCHITECTURE.md)
+
 # autonomous-multimodel-agent
 
 Autonomous AI agent systems — multi-model orchestration and real-world agentic pipelines.
