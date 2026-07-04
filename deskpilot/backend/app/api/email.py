@@ -1,10 +1,11 @@
 """
 /api/email — AI-assisted email reply suggestions and direct send.
 """
+import base64
 import json
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from pydantic import BaseModel
@@ -134,3 +135,58 @@ async def send_email(
         raise HTTPException(status_code=500, detail=result["error"])
 
     return {"status": "sent", "to": request.to, "subject": request.subject}
+
+
+@router.get("/inbox")
+async def get_inbox(
+    max_results: int = Query(default=10, le=50),
+    user: User = Depends(get_current_user),
+):
+    if not user.access_token_enc:
+        raise HTTPException(status_code=400, detail="Gmail not connected")
+
+    from app.services import gmail as gmail_service
+    from app.services.phishing_scorer import score_email
+    from app.utils.token_refresh import get_valid_credentials
+    from app.core.config import settings
+
+    creds = await get_valid_credentials(user)
+    svc = gmail_service._build_service(creds)
+
+    try:
+        results = svc.users().messages().list(
+            userId="me", labelIds=["INBOX"], maxResults=max_results
+        ).execute()
+        messages = results.get("messages", [])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Gmail error: {e}")
+
+    inbox = []
+    for msg in messages:
+        try:
+            detail = svc.users().messages().get(
+                userId="me", id=msg["id"], format="metadata",
+                metadataHeaders=["Subject", "From", "Date"]
+            ).execute()
+            headers = {h["name"]: h["value"] for h in detail.get("payload", {}).get("headers", [])}
+
+            risk = {"verdict": "UNKNOWN", "risk_score": None}
+            if settings.MAIL_PHIS_URL:
+                raw_msg = svc.users().messages().get(
+                    userId="me", id=msg["id"], format="raw"
+                ).execute()
+                raw_bytes = base64.urlsafe_b64decode(raw_msg.get("raw", ""))
+                risk = await score_email(raw_bytes)
+
+            inbox.append({
+                "id": msg["id"],
+                "from": headers.get("From", ""),
+                "subject": headers.get("Subject", "(no subject)"),
+                "date": headers.get("Date", ""),
+                "verdict": risk["verdict"],
+                "risk_score": risk["risk_score"],
+            })
+        except Exception:
+            continue
+
+    return {"emails": inbox}

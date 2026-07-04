@@ -5,6 +5,7 @@ from alembic.config import Config
 from alembic import command
 
 from routers import leads, pipeline, templates
+from routers.followups import router as followups_router
 
 
 @asynccontextmanager
@@ -31,6 +32,7 @@ app.add_middleware(
 app.include_router(leads.router)
 app.include_router(pipeline.router)
 app.include_router(templates.router)
+app.include_router(followups_router)
 
 
 @app.get("/health")

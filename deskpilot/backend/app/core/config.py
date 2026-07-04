@@ -32,6 +32,8 @@ class Settings(BaseSettings):
     LANGSMITH_API_KEY: Optional[str] = None
     LANGSMITH_PROJECT: str = "deskpilot"
 
+    MAIL_PHIS_URL: str = ""   # e.g. http://mail-phis-backend:8000
+
     FRONTEND_URL: str = "http://localhost:3000"
     DEBUG: bool = False
     CORS_ORIGINS: list[str] = ["http://localhost:3000"]

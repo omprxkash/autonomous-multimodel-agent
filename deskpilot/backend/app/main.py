@@ -6,6 +6,7 @@ from app.core.config import settings
 from app.core.database import init_db, engine
 from app.api import auth, chat
 from app.api import stream, users, email, calendar
+from app.api.webhooks import router as webhooks_router
 
 
 @asynccontextmanager
@@ -61,3 +62,4 @@ app.include_router(stream.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(email.router, prefix="/api")
 app.include_router(calendar.router, prefix="/api")
+app.include_router(webhooks_router, prefix="/api")
