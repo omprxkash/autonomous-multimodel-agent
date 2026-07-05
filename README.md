@@ -71,6 +71,32 @@ Raw MIME → 9-stage pipeline → Verdict (SAFE / MARKETING / SUSPICIOUS / PHISH
 
 ---
 
+## Core pattern
+
+Every agent in this repo runs a ReAct loop — Reason, Act, Observe, repeat. The LangGraph
+graphs are structured expressions of this loop. The bare-API version makes the mechanics explicit:
+
+```python
+messages = [{"role": "user", "content": task}]
+
+while True:
+    response = client.messages.create(model=..., tools=tools, messages=messages)
+    messages.append({"role": "assistant", "content": response.content})
+
+    if response.stop_reason == "end_turn":
+        return final_answer(response)
+
+    tool_results = [run_tool(block) for block in response.content if block.type == "tool_use"]
+    messages.append({"role": "user", "content": tool_results})
+```
+
+`messages` is the agent's memory — every tool call and result is appended so the LLM always
+sees the full history of what it has done. LangGraph replaces the `while` loop with a
+`StateGraph`, tool dispatch with `ToolNode`, and the stop condition with an `END` edge —
+same loop, more structure.
+
+---
+
 ## Stack
 
 | Layer | Technology |
