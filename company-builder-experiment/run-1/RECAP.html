@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReconStock — Run 1 Recap</title>
+<style>
+  :root{
+    --navy:#0E2A47; --green:#166534; --green-ui:#16A34A; --ink:#0F172A;
+    --muted:#475569; --paper:#F8FAFC; --danger:#B91C1C; --warn:#B45309;
+    --sans:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',Consolas,'Cascadia Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.6}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+  header{background:var(--navy);color:#fff;padding:56px 0 48px}
+  header .logo{height:56px;margin-bottom:20px}
+  header h1{font-size:2.2rem;letter-spacing:-.02em}
+  header .tag{color:#9FDDB4;font-size:1.15rem;margin-top:8px;max-width:640px}
+  header .sub{color:#B8C7D9;margin-top:14px;font-size:.95rem;max-width:680px}
+  section{padding:36px 0;border-bottom:1px solid #E2E8F0}
+  h2{color:var(--navy);font-size:1.35rem;margin-bottom:14px;letter-spacing:-.01em}
+  h3{color:var(--navy);font-size:1.05rem;margin:18px 0 8px}
+  p{margin-bottom:10px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
+  .stat{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:16px}
+  .stat .n{font-family:var(--mono);font-size:1.5rem;color:var(--green);font-weight:700}
+  .stat .l{color:var(--muted);font-size:.85rem;margin-top:4px}
+  blockquote{background:#fff;border-left:4px solid var(--green-ui);border-radius:0 8px 8px 0;
+    padding:12px 16px;margin:12px 0;font-size:.95rem}
+  blockquote .src{display:block;margin-top:6px;color:var(--muted);font-size:.8rem}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #E2E8F0;
+    border-radius:8px;overflow:hidden;font-size:.92rem;margin-top:12px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px;font-weight:600}
+  td{padding:9px 12px;border-top:1px solid #EDF2F7;vertical-align:top}
+  td.mono, .mono{font-family:var(--mono)}
+  a{color:var(--green);font-weight:500}
+  a:hover{color:var(--green-ui)}
+  video{width:100%;max-width:640px;border-radius:10px;border:1px solid #E2E8F0;display:block;margin:10px 0 6px;background:#000}
+  .vidnote{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+  ol.phases{margin:10px 0 0 20px}
+  ol.phases li{margin-bottom:10px}
+  .pill{display:inline-block;background:#DCFCE7;color:var(--green);border-radius:99px;
+    padding:2px 10px;font-size:.78rem;font-weight:600;font-family:var(--mono)}
+  .pill.warn{background:#FEF3C7;color:var(--warn)}
+  .honesty{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:16px 18px;font-size:.92rem}
+  .files td:first-child{white-space:nowrap}
+  code{font-family:var(--mono);background:#E9EEF5;border-radius:4px;padding:1px 6px;font-size:.88em}
+  pre{background:var(--navy);color:#D7E3F0;border-radius:8px;padding:14px 16px;overflow-x:auto;
+    font-family:var(--mono);font-size:.85rem;margin:10px 0}
+  footer{padding:28px 0 48px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img class="logo" src="brand/logo-dark.svg" alt="ReconStock logo">
+    <h1>ReconStock</h1>
+    <p class="tag">The only Shopify inventory sync that shows every change before it writes — and lets you undo it.</p>
+    <p class="sub">This page is the complete recap of an autonomous company-building run (2026-07-11): from open-internet pain research to a verified product demo, brand, business plan, videos, and a red-team stress test. Every artifact is linked below. Nothing was published; nothing was purchased.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>The business in one minute</h2>
+  <p>Multi-store Shopify merchants pay $10–60/mo for inventory-sync apps that occasionally fail catastrophically — zeroing or negating live inventory across thousands of SKUs (verified reviews as recent as June 2026). Every incumbent syncs first and apologizes later. <strong>ReconStock inverts that:</strong> read-only dry-run by default, a diff preview of every change before it's written, an anomaly circuit-breaker that halts disasters ("this sync would zero 2,143 SKUs — halted"), and journaled one-click rollback. It doesn't promise to never fail — it promises to <em>fail safe and be fully reversible</em>.</p>
+  <div class="grid">
+    <div class="stat"><div class="n">$29–99/mo</div><div class="l">Standard / Pro / Scale tiers + Free — top of the verified price band, justified by safety differentiation</div></div>
+    <div class="stat"><div class="n">60k–150k</div><div class="l">multi-store merchant TAM anchor (Store Leads; the "% needing sync" slice is a labeled estimate)</div></div>
+    <div class="stat"><div class="n">0 of 5</div><div class="l">incumbents ship dry-run / diff / rollback (live listings, 2026-07-11; in-product audit still required pre-launch)</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Verified market evidence (not testimonials)</h2>
+  <blockquote>"…all inventory level for connected products in both stores is either zero or even negative." — merchant review of a sync app that corrupted 2,000+ products
+    <span class="src"><a href="https://apps.shopify.com/easify-inventory-sync/reviews">Shopify App Store review, 2026-06-21</a> — re-fetched and verified verbatim</span>
+  </blockquote>
+  <p>Three additional corruption reports across two other incumbent apps (2020–2025) plus independent Shopify Community threads describing the same zeroing/circular-loop failure modes were re-fetched and verified. Full evidence trail: <a href="research/candidates.md">candidates.md (C09)</a> → <a href="research/verification.md">verification.md</a>.</p>
+</section>
+
+<section>
+  <h2>How this run worked</h2>
+  <ol class="phases">
+    <li><strong>Pain hunt</strong> — 8 parallel researchers swept Reddit (via mirror APIs when blocked), Hacker News, G2/Capterra/BBB, vertical pro forums, app marketplaces, Indie Hackers, and SMB communities → 33 raw findings merged into <a href="research/candidates.md">20 candidates</a>.</li>
+    <li><strong>Tournament</strong> — five judge personas scored all 20 on pain, urgency, reachability, willingness-to-pay, buildability, incumbent weakness → 4 finalists. <a href="research/tournament.md">Full bracket</a>.</li>
+    <li><strong>Adversarial verification</strong> — skeptics re-fetched every finalist's evidence. It worked: one finalist's headline stat was exposed as misattributed, another's willingness-to-pay evidence as synthetic. C09 was the only finalist whose evidence <em>strengthened</em>. <a href="research/verification.md">Verdicts</a>.</li>
+    <li><strong>Debate &amp; vote</strong> — advocate vs. skeptic memos per finalist, then three fresh judges: 1-1-1 first round, unanimous 3-0 for C09 after deliberation.</li>
+    <li><strong>Business design</strong> — live competitor teardown (all five incumbents' listings/pricing), Shopify API feasibility (<code>inventorySetQuantities</code> compare-and-set, bulk operations), pricing and unit economics. <a href="business/business-plan.md">Plan</a> · <a href="business/market-research.md">Market research</a> · <a href="business/launch-plan.md">Launch plan</a>.</li>
+    <li><strong>Brand</strong> — 20 names screened for trademark + domain collisions → <strong>ReconStock</strong> (reconstock.com/.io/.app all NXDOMAIN); 6 logo candidates critiqued → "diff brackets" mark. <a href="brand/name-rationale.md">Name</a> · <a href="brand/brand-guidelines.md">Guidelines</a> · <a href="brand/logo-critique.md">Logo critique</a>.</li>
+    <li><strong>Build</strong> — working product demo + landing page, driven end-to-end by Playwright: <span class="pill">34/34 checks passed</span>. Screenshot-verified on desktop and mobile (390×844, zero overflow). Proof: <a href="record/shots/03-circuit-breaker.png">breaker halt</a>, <a href="record/shots/02-diff-preview.png">diff preview</a>, <a href="record/shots/04-rollback.png">rollback</a>, <a href="record/shots/08-landing-mobile.png">mobile</a>.</li>
+    <li><strong>Red team</strong> — six skeptic personas, <span class="pill">33 attacks · 0 kills</span>, 19 fixes applied to plan, site, and product (including the messaging rule: never promise "never corrupts"), 14 risks accepted with reasons. <a href="research/red-team.md">Verdict: VIABLE-WITH-FIXES</a>.</li>
+    <li><strong>Videos</strong> — recorded from the real product UI via Playwright, assembled locally with ffmpeg; founder voiceover is Windows TTS (disclosed). Scripts: <a href="video/launch-script.md">launch</a> · <a href="video/founder-script.md">founder</a>.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Watch</h2>
+  <h3>Launch video (46s)</h3>
+  <video controls preload="metadata" src="video/launch.mp4"></video>
+  <p class="vidnote">Hook → circuit-breaker hero moment → diff &amp; dry-run → rollback → pricing. Real product footage, synthesized ambient bed.</p>
+  <h3>Founder video (60s)</h3>
+  <video controls preload="metadata" src="video/founder.mp4"></video>
+  <p class="vidnote">Fictional founder, voiced by Windows TTS (Microsoft Zira) — disclosed in the <a href="record/honesty.md">honesty file</a>.</p>
+</section>
+
+<section>
+  <h2>Run it yourself</h2>
+  <p>From <code>run-1\</code> (requires Node, already vendored in <code>_tools\</code>):</p>
+  <pre>node _tools\verify\server.js        # serves product + site locally
+# Product demo:  http://localhost:8123/product/
+# Landing page:  http://localhost:8123/site/
+node _tools\verify\verify.js        # re-runs all 34 Playwright checks</pre>
+  <p class="vidnote">Note: the brand specifies Inter/JetBrains Mono; the offline build renders close system equivalents (Segoe UI/Consolas) — see README.</p>
+  <p>Exact commands and troubleshooting: <a href="README.md">README.md</a>.</p>
+</section>
+
+<section>
+  <h2>Honesty &amp; record</h2>
+  <div class="honesty">
+    <strong>What's real and what isn't:</strong> every market claim traces to a re-fetched source or is labeled an assumption. The product is a local demo with seeded data (not connected to Shopify). The founder is fictional and labeled. The voice is TTS. Domains were checked via DNS, not registered. Two research errors were caught by our own verification pass and are documented, not hidden. Full list: <a href="record/honesty.md">honesty.md</a> · every consequential call: <a href="record/decisions.md">decisions.md</a>.
+  </div>
+</section>
+
+<section>
+  <h2>Every artifact</h2>
+  <table class="files">
+    <tr><th>Area</th><th>Files</th></tr>
+    <tr><td class="mono">research/</td><td><a href="research/candidates.md">candidates.md</a> · <a href="research/verification.md">verification.md</a> · <a href="research/tournament.md">tournament.md</a> · <a href="research/red-team.md">red-team.md</a> · raw/ (8 lane files)</td></tr>
+    <tr><td class="mono">business/</td><td><a href="business/business-plan.md">business-plan.md</a> · <a href="business/market-research.md">market-research.md</a> · <a href="business/launch-plan.md">launch-plan.md</a></td></tr>
+    <tr><td class="mono">brand/</td><td><a href="brand/brand-guidelines.md">brand-guidelines.md</a> · <a href="brand/name-rationale.md">name-rationale.md</a> · <a href="brand/logo.svg">logo.svg</a> · <a href="brand/logo-dark.svg">logo-dark.svg</a> · <a href="brand/logo-critique.md">logo-critique.md</a> · exports/ (4 PNGs) · logo-candidates/ (6 SVGs)</td></tr>
+    <tr><td class="mono">product/</td><td><a href="product/index.html">index.html</a> (Sync Console demo — serve it, don't file-open, see README)</td></tr>
+    <tr><td class="mono">site/</td><td><a href="site/index.html">index.html</a> (landing page)</td></tr>
+    <tr><td class="mono">video/</td><td><a href="video/launch.mp4">launch.mp4</a> · <a href="video/founder.mp4">founder.mp4</a> · scripts</td></tr>
+    <tr><td class="mono">extras/</td><td><a href="extras/investor-teaser.html">investor-teaser.html</a> (one-page teaser) · <a href="extras/onboarding-emails.md">onboarding-emails.md</a> (5-email trust ramp) · <a href="extras/premortem.html">premortem.html</a> — "the review we must never earn," a self-authored future 1-star review answered by engineering commitments (the deliverable nobody asked for)</td></tr>
+    <tr><td class="mono">record/</td><td><a href="record/decisions.md">decisions.md</a> · <a href="record/honesty.md">honesty.md</a> · <a href="record/gap-analysis.md">gap-analysis.md</a> · shots/ (10 verification screenshots, mobile + desktop)</td></tr>
+  </table>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    ReconStock — run-1, 2026-07-11. Built autonomously from a single goal prompt (<a href="../MASTER_PROMPT.md">MASTER_PROMPT.md</a>). Concept package: nothing published, nothing purchased, fictional founder, all claims sourced or disclosed.
+  </div>
+</footer>
+
+</body>
+</html>

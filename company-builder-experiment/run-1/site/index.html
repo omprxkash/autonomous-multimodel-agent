@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReconStock — Safe inventory sync for multi-store Shopify merchants</title>
+<meta name="description" content="Undo an inventory sync. Roll back a bad sync, prevent overselling, and keep an inventory backup of every change. ReconStock shows every change before it writes — dry-run, diff preview, circuit breaker, one-click sync rollback.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="#top" aria-label="ReconStock home">
+      <svg viewBox="0 0 80 80" width="26" height="26" aria-hidden="true">
+        <g fill="none" stroke="#0E2A47" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="27,13 12,13 12,67 27,67"/>
+          <polyline points="53,13 68,13 68,67 53,67"/>
+          <polyline points="28,42 37,53 54,27"/>
+        </g>
+      </svg>
+      <span>ReconStock</span>
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#problem">The problem</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn--primary btn--sm" href="#pricing">Start free <span class="cta-note">(demo)</span></a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow">Safe inventory sync for multi-store Shopify merchants</p>
+        <h1 id="hero-headline">The only Shopify inventory sync that shows every change before it writes — and lets you undo it.</h1>
+        <p class="hero__sub">Dry-run every sync. Review the exact diff — SKU by SKU, old quantity to new — before anything touches a live store. A circuit breaker halts anomalies like mass-zeroing before they land. And if you ever need to, roll back in one click.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#pricing" id="hero-cta">Start free — no card required <span class="cta-note">(demo)</span></a>
+          <a class="btn btn--secondary" href="#how">See how it works</a>
+        </div>
+        <p class="hero__proofline">Installs read-only by default — you see the diff and the circuit breaker working before ReconStock can write anything. Free tier includes dry-run, diff preview, and the full audit log.</p>
+      </div>
+
+      <!-- Product mock: a CSS recreation of the circuit-breaker moment -->
+      <div class="hero__mock" aria-label="Product screenshot: a halted sync">
+        <div class="mock-window">
+          <div class="mock-window__bar">
+            <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+            <span class="mock-window__title">ReconStock — Sync Console</span>
+          </div>
+          <div class="mock-alert">
+            <p class="mock-alert__eyebrow">Circuit breaker — halted before write</p>
+            <p class="mock-alert__headline">Halted: this sync would zero 2,143 SKUs across EU Store — review before applying.</p>
+            <p class="mock-alert__sub">Nothing was written. Supplier feed returned a blank quantity column.</p>
+          </div>
+          <table class="mock-table">
+            <thead><tr><th>SKU</th><th class="num">Old</th><th></th><th class="num">New</th></tr></thead>
+            <tbody>
+              <tr><td>RS-TEE-BLK-M</td><td class="num">96</td><td class="arr">&rarr;</td><td class="num bad">0</td></tr>
+              <tr><td>RS-HOD-GRY-L</td><td class="num">28</td><td class="arr">&rarr;</td><td class="num bad">0</td></tr>
+              <tr><td>RS-JNS-IND-30</td><td class="num">20</td><td class="arr">&rarr;</td><td class="num bad">0</td></tr>
+              <tr><td class="more" colspan="4">+ 2,140 more SKUs held — 0 writes made</td></tr>
+            </tbody>
+          </table>
+          <div class="mock-actions">
+            <span class="mock-btn mock-btn--ghost">Export halt report</span>
+            <span class="mock-btn mock-btn--primary">Dismiss sync (recommended)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="section section--tint" id="problem">
+    <div class="container">
+      <h2>Sync apps don't fail safely. Merchants have the receipts.</h2>
+      <p class="section__sub">These are public app-store reviews of <em>other</em> inventory-sync apps — market evidence of a category-wide gap, not testimonials for ReconStock. Sources linked.</p>
+
+      <div class="quotes">
+        <blockquote class="quote">
+          <p>"Don't install the app!!! Almost 2000 variants turned to negative qty…I need to fix up the whole inventory which will take me a while"</p>
+          <footer>
+            — Italy Station by GD, reviewing <cite>Multi-Store Inventory Sync</cite>, Jul 2020.
+            <a href="https://apps.shopify.com/multi-store-inventory-sync/reviews" rel="noopener">Source: Shopify App Store reviews</a>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"This was a catastrophic failure. It took me over 3 hours of manual effort…This operational loss…cost my business thousands of dollars."</p>
+          <footer>
+            — Babies Mart Australia, reviewing <cite>Multi-Store Inventory Sync</cite>, Nov 2025.
+            <a href="https://apps.shopify.com/multi-store-inventory-sync/reviews" rel="noopener">Source: Shopify App Store reviews</a>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <p>"all inventory level for connected products in both stores is either zero or even negative" — 2,000+ products needed manual adjustment afterward.</p>
+          <footer>
+            — Kurti Connection USA, reviewing <cite>Easify Inventory Sync</cite>, Jun 2026.
+            <a href="https://apps.shopify.com/easify-inventory-sync/reviews" rel="noopener">Source: Shopify App Store reviews</a>
+          </footer>
+        </blockquote>
+      </div>
+
+      <p class="problem__close">The pattern repeats across unrelated apps, year after year: a sync misreads its source, writes zeros or negatives to a live catalog, and the merchant spends hours rebuilding — while overselling in the meantime. The failure isn't one buggy vendor. It's an architecture that writes first and asks never.</p>
+      <p class="problem__close">ReconStock won't promise you a sync that never fails — nobody honestly can. It promises a sync that <strong>fails safe and is fully reversible</strong>: dry-run by default, halted before mass-destructive writes, undone in one click if anything is ever wrong. If you've just been burned, make your next sync app the last one that surprises you.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section" id="how">
+    <div class="container">
+      <h2>Four checks between a sync and your live inventory</h2>
+      <p class="section__sub">Every sync passes through the same pipeline: preview, validate, commit, reversible. No step is skippable in the wrong direction. The diff table is the easy part — the circuit breaker and the journaled, reconcilable rollback are the system underneath it.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step__num">1</span>
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26"><g fill="none" stroke="#0E2A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" stroke-dasharray="3.5 3.5"/><path d="M9.5 12l1.8 2 3.4-4.5"/></g></svg>
+          </div>
+          <h3>Dry-run</h3>
+          <p>Run the whole sync against live data with writes disabled. You get the complete change set and a report — and your stores don't feel a thing.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">2</span>
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26"><g fill="none" stroke="#0E2A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8,4 4,4 4,20 8,20"/><polyline points="16,4 20,4 20,20 16,20"/><path d="M9 10h6M9 14h6"/></g></svg>
+          </div>
+          <h3>Diff preview</h3>
+          <p>A human-readable table of exactly what will change: SKU, store, old quantity → new quantity, and where the change came from. You approve before anything is written.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">3</span>
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26"><g fill="none" stroke="#0E2A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8.4" y="5" width="2.4" height="10" rx="1"/><rect x="13.2" y="5" width="2.4" height="10" rx="1"/><circle cx="12" cy="19" r="0.8" fill="#0E2A47" stroke="none"/></g></svg>
+          </div>
+          <h3>Circuit breaker</h3>
+          <p>Rules watch every batch for destructive patterns — "about to zero 2,000 SKUs," "catalog value dropping 90%" — and halt the sync before a single write. Held, not applied.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">4</span>
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26"><g fill="none" stroke="#0E2A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13a6 6 0 1 1-2-6.5"/><path d="M16.2 3.6v3.4h-3.4"/></g></svg>
+          </div>
+          <h3>Rollback</h3>
+          <p>Every applied batch is journaled with prior values. If anything is ever wrong, one click restores every quantity to its pre-sync state — with the audit log to prove it.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="section section--tint" id="pricing">
+    <div class="container">
+      <h2>Pricing</h2>
+      <p class="section__sub">Billed monthly through Shopify. Safety features are never the upsell — dry-run and diff preview are in every tier, including Free.</p>
+      <p class="section__sub scope-note"><strong>Honest scope, v1:</strong> inventory quantities only, store-to-store, 2 stores, approve-to-apply. Incumbents sync more surfaces (products, prices, more channels) than we do today — deliberately. We cover the highest-damage surface first, and cover it safely; connectors come later.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Free</h3>
+          <p class="price"><span class="price__num">$0</span>/mo</p>
+          <p class="price-card__target">Trial · up to 50 SKUs · 2 stores</p>
+          <ul>
+            <li>Dry-run mode</li>
+            <li>Diff preview</li>
+            <li>Full audit log</li>
+          </ul>
+          <a class="btn btn--secondary" href="#pricing">Start free <span class="cta-note">(demo)</span></a>
+        </div>
+        <div class="price-card price-card--featured">
+          <p class="price-card__flag">Most popular</p>
+          <h3>Standard</h3>
+          <p class="price"><span class="price__num">$29</span>/mo</p>
+          <p class="price-card__target">Up to 2,000 SKUs · 2 stores</p>
+          <ul>
+            <li>All safety features</li>
+            <li>One-click rollback</li>
+            <li>Circuit breaker</li>
+            <li>Semi-automatic apply</li>
+          </ul>
+          <a class="btn btn--primary" href="#pricing">Start Standard <span class="cta-note">(demo)</span></a>
+        </div>
+        <div class="price-card">
+          <h3>Pro</h3>
+          <p class="price"><span class="price__num">$49</span>/mo</p>
+          <p class="price-card__target">Up to 10,000 SKUs · up to 5 stores</p>
+          <ul>
+            <li>Everything in Standard</li>
+            <li>Scheduled auto-sync</li>
+            <li>Priority breaker rules</li>
+            <li>Faster sync</li>
+          </ul>
+          <a class="btn btn--secondary" href="#pricing">Start Pro <span class="cta-note">(demo)</span></a>
+        </div>
+        <div class="price-card">
+          <h3>Scale</h3>
+          <p class="price"><span class="price__num">$99</span>/mo</p>
+          <p class="price-card__target">10k+ SKUs · multi-channel</p>
+          <ul>
+            <li>Everything in Pro</li>
+            <li>Multi-channel connectors</li>
+            <li>Team roles</li>
+            <li>SLA-style support</li>
+          </ul>
+          <a class="btn btn--secondary" href="#pricing">Talk to us <span class="cta-note">(demo)</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOUNDER NOTE ============ -->
+  <section class="section" id="founder">
+    <div class="container container--narrow">
+      <div class="founder-card">
+        <h2>A note from the founder</h2>
+        <p>I spent six years running operations for a two-store apparel brand — one storefront for North America, one for the EU. Twice in that time, a sync app rewrote our EU inventory to zero overnight. Both times we found out from customers, not from the app. Both times the fix was a spreadsheet, a long day, and a quiet promise to "keep an eye on it" — which is not a system, it's a worry.</p>
+        <p>ReconStock is the tool I wanted on those mornings. It doesn't sync faster than the incumbents and it isn't smarter than them. It's just built on one rule they aren't: <strong>nothing writes to a live store without a preview, a guardrail, and an undo.</strong> If a sync ever looks wrong, ReconStock's job is to have already stopped it — and to show you exactly what it stopped.</p>
+        <p>If that's the kind of boring, careful software you want between the internet and your inventory, I'd be glad to have you try it.</p>
+        <p class="founder-sig">— Maya Lindqvist, founder</p>
+        <p class="founder-smallprint">Small print, honestly: ReconStock is a concept demo. "Maya Lindqvist" is a fictional founder and this note is illustrative copy, not a real biography. The merchant quotes above, however, are real public reviews of other apps, linked to their sources.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section section--tint" id="faq">
+    <div class="container container--narrow">
+      <h2>Questions merchants actually ask</h2>
+      <div class="faq-list">
+        <details class="faq" open>
+          <summary>What happens when a sync fails?</summary>
+          <p>Nothing — to your inventory. ReconStock stages every change before writing, so a failure mid-sync leaves your live quantities untouched. If a batch is partially applied when an error occurs, the journal already holds every prior value, and the batch is either completed with compare-and-set checks or rolled back to its pre-sync state. You get a plain-language report: what was attempted, what was written, what was held, and why.</p>
+        </details>
+        <details class="faq">
+          <summary>Can ReconStock itself zero out my inventory?</summary>
+          <p>We won't claim "never" — no software vendor honestly can, and a burned merchant shouldn't believe one who does. What we promise is that ReconStock <strong>fails safe and is fully reversible</strong>: it installs read-only (dry-run only) until you grant write access; writes use Shopify's compare-and-set (<span class="mono">compareQuantity</span>) so we never clobber a quantity that changed under us; the circuit breaker halts mass-destructive batches before any write; destructive batches are never auto-applied; and every applied batch is journaled and reversible in one click.</p>
+        </details>
+        <details class="faq">
+          <summary>Do I have to approve every sync by hand?</summary>
+          <p>At install, ReconStock is read-only: it dry-runs and shows diffs but cannot write anything until you grant write access — you watch the safety net work before you trust it. After that: only at first, and only if you want to. Standard runs semi-automatic: routine changes apply after review rules pass, and anything unusual waits for you. Pro adds scheduled auto-sync with the circuit breaker armed — the guardrails stay on even when you're not watching.</p>
+        </details>
+        <details class="faq">
+          <summary>Does this replace my current sync app?</summary>
+          <p>For store-to-store inventory quantities, yes — that's exactly the surface v1 covers, deliberately narrow because it's the highest-damage one. Product details, prices, and multi-channel connectors (Amazon, eBay, Etsy, TikTok Shop) are on the roadmap. You can also run the Free tier alongside an incumbent to dry-run and audit what it's doing before you switch.</p>
+        </details>
+        <details class="faq">
+          <summary>How does billing work?</summary>
+          <p>Through Shopify's own billing, on your existing Shopify invoice — no separate card on file. Upgrade, downgrade, or cancel any time; plan limits are by SKU count and store count, listed above.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <svg viewBox="0 0 80 80" width="24" height="24" aria-hidden="true">
+        <g fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="27,13 12,13 12,67 27,67"/>
+          <polyline points="53,13 68,13 68,67 53,67"/>
+          <polyline points="28,42 37,53 54,27"/>
+        </g>
+      </svg>
+      <span>ReconStock</span>
+    </div>
+    <p class="footer__tag">Every sync is previewed, dry-run, and reversible.</p>
+    <nav class="footer__links" aria-label="Footer">
+      <a href="#problem">The problem</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <p class="footer__legal">ReconStock is a concept demo (2026). Not affiliated with Shopify. Quoted reviews are public statements about third-party apps, linked to their sources, and are not endorsements of ReconStock.</p>
+  </div>
+</footer>
+
+</body>
+</html>

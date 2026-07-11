@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80" role="img" aria-labelledby="rs-title rs-desc">
+  <title id="rs-title">ReconStock</title>
+  <desc id="rs-desc">A diff-preview frame (two facing brackets) with an approval checkmark inside — every sync is reviewed and confirmed before it changes anything.</desc>
+  <g fill="none" stroke="#0E2A47" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="27,13 12,13 12,67 27,67"/>
+    <polyline points="53,13 68,13 68,67 53,67"/>
+    <polyline points="28,42 37,53 54,27"/>
+  </g>
+  <text x="98" y="52" font-family="Inter, Arial, Helvetica, sans-serif" font-weight="700" font-size="34" letter-spacing="0.3" fill="#0E2A47">ReconStock</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <title>ReconStock — Candidate 4: Loop Check</title>
+  <!-- Mark: a classic two-store sync loop, but the loop only closes through a checkmark. -->
+  <g fill="none" stroke="#0E2A47" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60,22 A22,22 0 0 0 21,31"/>
+    <path d="M20,58 A22,22 0 0 0 59,49"/>
+    <polyline points="32,40 38,46 49,32"/>
+  </g>
+  <polygon points="21,31 29,29 25,38" fill="#0E2A47"/>
+  <polygon points="59,49 51,51 55,42" fill="#0E2A47"/>
+  <!-- Wordmark -->
+  <text x="98" y="52" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" letter-spacing="0.2" fill="#0E2A47">ReconStock</text>
+</svg>

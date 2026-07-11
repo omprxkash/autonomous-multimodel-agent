@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReconStock — The Review We Must Never Earn</title>
+<style>
+  :root{--navy:#0E2A47;--green:#166534;--green-ui:#16A34A;--ink:#0F172A;--muted:#475569;
+    --paper:#F8FAFC;--danger:#B91C1C;
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',Consolas,monospace}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px}
+  .kicker{font-family:var(--mono);color:var(--green);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+  h1{color:var(--navy);font-size:1.9rem;letter-spacing:-.02em;margin:8px 0 6px}
+  .intro{color:var(--muted);margin-bottom:28px}
+  .review{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:22px 24px;
+    box-shadow:0 2px 8px rgba(14,42,71,.06);position:relative}
+  .review .stars{color:var(--danger);font-size:1.1rem;letter-spacing:2px}
+  .review .meta{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin:4px 0 12px}
+  .review p{margin-bottom:10px}
+  .stamp{position:absolute;top:14px;right:16px;border:2px solid var(--danger);color:var(--danger);
+    font-family:var(--mono);font-size:.7rem;font-weight:700;padding:3px 8px;border-radius:4px;
+    transform:rotate(6deg);letter-spacing:.05em}
+  h2{color:var(--navy);font-size:1.25rem;margin:36px 0 12px}
+  .commit{background:#fff;border:1px solid #E2E8F0;border-left:4px solid var(--green-ui);
+    border-radius:0 10px 10px 0;padding:14px 18px;margin:12px 0}
+  .commit .line{font-weight:600;color:var(--navy)}
+  .commit .how{font-size:.9rem;color:var(--muted);margin-top:4px}
+  .commit .how code{font-family:var(--mono);background:#E9EEF5;border-radius:4px;padding:1px 5px;font-size:.85em}
+  .close{margin-top:32px;background:var(--navy);color:#D7E3F0;border-radius:12px;padding:20px 24px}
+  .close strong{color:#fff}
+  footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
+  footer a{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Pre-mortem · written before launch, kept forever</p>
+  <h1>The review we must never earn</h1>
+  <p class="intro">Every incumbent in our category has this review. We wrote ours in advance — dated from a future we intend to prevent — and pinned the engineering commitment that answers each sentence. If ReconStock ever earns this review for real, this page becomes our resignation letter.</p>
+
+  <div class="review">
+    <div class="stamp">MUST NEVER SHIP</div>
+    <div class="stars">★☆☆☆☆</div>
+    <div class="meta">Fictional review · dated 2027-03-14 · the one we wrote so we never receive it</div>
+    <p>"Ran ReconStock for six months, no problems. Then last Tuesday it decided to 'sync' and set 1,800 of our SKUs to zero across both stores in the middle of our biggest sales weekend. No warning, no way to see what it was about to do, and support took four days to answer while we re-counted a warehouse by hand. The app that was supposed to protect our inventory destroyed it. Uninstalled. Do not trust your catalog to this."</p>
+  </div>
+
+  <h2>The five sentences, answered</h2>
+
+  <div class="commit">
+    <div class="line">"it decided to sync" → Nothing decides but you.</div>
+    <div class="how">Read-only dry-run is the default posture forever. Writes happen through approve-to-apply; auto-apply is opt-in, scoped, and revocable per store.</div>
+  </div>
+
+  <div class="commit">
+    <div class="line">"set 1,800 SKUs to zero" → The breaker halts exactly this.</div>
+    <div class="how">Any sync touching more than the configured share of the catalog — and any sync writing zeros from an empty source read — is halted before the first write, not rolled back after the last one. This failure class is verified in incumbents (<a href="https://apps.shopify.com/easify-inventory-sync/reviews">June 2026 review, re-fetched</a>); it is the reason this product exists.</div>
+  </div>
+
+  <div class="commit">
+    <div class="line">"no way to see what it was about to do" → The diff is the interface.</div>
+    <div class="how">Every pending sync renders as old&nbsp;→&nbsp;new per SKU per store before anything is written. If the diff can't be produced, the sync doesn't run.</div>
+  </div>
+
+  <div class="commit">
+    <div class="line">"middle of our biggest sales weekend" → Blast-radius limits are time-aware.</div>
+    <div class="how">Merchants can freeze writes for date ranges (sales, inventory counts). A frozen store accepts dry-runs only.</div>
+  </div>
+
+  <div class="commit">
+    <div class="line">"support took four days" → A data incident is a same-day incident.</div>
+    <div class="how">Journaled rollback means recovery is a product feature, not a support ticket: every applied sync is reversible from the audit log by the merchant, without us.</div>
+  </div>
+
+  <div class="close">
+    <strong>Why this page ships with the product:</strong> our positioning is honesty — "fails safe and fully reversible," never "never fails." A company that writes its own worst review before launch, in public, has to build the product that makes it fiction. That's the point.
+  </div>
+
+  <footer>ReconStock pre-mortem · the review above is fictional and self-authored · commitments trace to <a href="../business/business-plan.md">business-plan.md</a> §3 and the red-team rulings in <a href="../research/red-team.md">red-team.md</a></footer>
+</div>
+</body>
+</html>

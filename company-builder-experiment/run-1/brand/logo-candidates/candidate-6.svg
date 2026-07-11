@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <title>ReconStock — Candidate 6: Chevron Interlock</title>
+  <!-- Mark: two-way sync flows (outbound/inbound) that stop and confirm at a locked checkpoint, not a free-running loop. -->
+  <g fill="none" stroke="#0E2A47" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="17,18 35,40 17,62"/>
+    <polyline points="63,18 45,40 63,62"/>
+  </g>
+  <circle cx="40" cy="40" r="6" fill="#0E2A47"/>
+  <!-- Wordmark -->
+  <text x="98" y="52" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" letter-spacing="0.2" fill="#0E2A47">ReconStock</text>
+</svg>

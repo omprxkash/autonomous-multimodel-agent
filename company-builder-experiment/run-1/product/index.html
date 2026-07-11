@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReconStock — Sync Console (Demo)</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__left">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 80 80" width="28" height="28">
+        <g fill="none" stroke="#0E2A47" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="27,13 12,13 12,67 27,67"/>
+          <polyline points="53,13 68,13 68,67 53,67"/>
+          <polyline points="28,42 37,53 54,27"/>
+        </g>
+      </svg>
+    </span>
+    <span class="brand-name">ReconStock</span>
+    <span class="env-tag">Sync Console — Demo Data</span>
+  </div>
+  <nav class="topbar__nav" aria-label="Primary">
+    <button class="nav-tab is-active" data-view="dashboard" type="button">Dashboard</button>
+    <button class="nav-tab" data-view="audit" type="button">Audit Log &amp; Rollback</button>
+  </nav>
+  <div class="topbar__right">
+    <button class="btn btn--ghost btn--sm" id="reset-demo" type="button" title="Restore all seed data">Reset demo data</button>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <section id="view-dashboard" class="view">
+
+    <div class="stores-row">
+      <!-- store cards injected by app.js -->
+    </div>
+
+    <div class="posture-note" id="posture-note">
+      <span class="badge badge--green">Write access: granted Jul 8</span>
+      <span>ReconStock installed <strong>read-only</strong> on Jul 1 and ran dry-run only until you granted write scope. Destructive batches are never auto-applied — the circuit breaker reviews every write.</span>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-col-main">
+
+        <section class="panel" id="pending-panel">
+          <div class="panel__head">
+            <h2>Pending syncs</h2>
+            <p class="panel__sub">Nothing writes to a live store until you review and approve it here.</p>
+          </div>
+          <div class="pending-list" id="pending-list"><!-- injected --></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head panel__head--row">
+            <div>
+              <h2>Inventory</h2>
+              <p class="panel__sub">Live quantities across both connected stores.</p>
+            </div>
+            <label class="search">
+              <input type="search" id="inventory-search" placeholder="Filter by SKU or product…" aria-label="Filter inventory">
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table class="table table--data" id="inventory-table">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th class="num">US Main Store</th>
+                  <th class="num">EU Store</th>
+                  <th class="num">Total</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-tbody"><!-- injected --></tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <aside class="dash-col-side">
+        <section class="panel">
+          <div class="panel__head">
+            <h2>Recent activity</h2>
+          </div>
+          <ul class="activity-list" id="activity-list"><!-- injected --></ul>
+        </section>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- ===================== DIFF PREVIEW ===================== -->
+  <section id="view-diff" class="view" hidden>
+    <button class="link-back" data-back="dashboard" type="button">&larr; Back to dashboard</button>
+
+    <div class="diff-head">
+      <div>
+        <h1 id="diff-title">Sync review</h1>
+        <p class="muted" id="diff-subtitle"></p>
+      </div>
+    </div>
+
+    <div class="panel panel--dryrun" id="dryrun-panel">
+      <div class="dryrun-row">
+        <label class="switch">
+          <input type="checkbox" id="dryrun-toggle" checked>
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </label>
+        <div class="dryrun-copy">
+          <strong>Dry-run mode</strong>
+          <p class="muted">On: this sync runs against live data and writes nothing. Off: approving will write to <span id="dryrun-target-store">the target store</span>.</p>
+        </div>
+      </div>
+      <div class="dryrun-actions">
+        <button class="btn btn--secondary" id="run-dryrun-btn" type="button">Run dry-run</button>
+        <button class="btn btn--secondary" id="export-report-btn" type="button">Export report (.csv)</button>
+      </div>
+    </div>
+
+    <div class="report-banner" id="report-banner" hidden></div>
+
+    <section class="panel">
+      <div class="panel__head">
+        <h2>Proposed changes</h2>
+        <p class="panel__sub" id="diff-count-sub"></p>
+      </div>
+      <div class="table-wrap">
+        <table class="table table--data table--diff">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Product</th>
+              <th>Store</th>
+              <th class="num">Old qty</th>
+              <th class="num"></th>
+              <th class="num">New qty</th>
+              <th>Source of change</th>
+            </tr>
+          </thead>
+          <tbody id="diff-tbody"><!-- injected --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="diff-footer">
+      <button class="btn btn--ghost" id="reject-sync-btn" type="button">Reject sync</button>
+      <button class="btn btn--primary" id="approve-sync-btn" type="button" disabled>Approve &amp; apply live</button>
+    </div>
+    <p class="muted small" id="approve-hint">Turn off dry-run mode to enable live apply.</p>
+  </section>
+
+  <!-- ===================== CIRCUIT BREAKER ===================== -->
+  <section id="view-breaker" class="view" hidden>
+    <div class="breaker-alert">
+      <div class="breaker-alert__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="34" height="34">
+          <g fill="none" stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="4" width="2.6" height="9" rx="1"></rect>
+            <rect x="14" y="4" width="2.6" height="9" rx="1"></rect>
+            <circle cx="12" cy="19.4" r="0.9" fill="#B91C1C" stroke="none"></circle>
+          </g>
+        </svg>
+      </div>
+      <div class="breaker-alert__body">
+        <p class="breaker-eyebrow">Circuit breaker — halted before write</p>
+        <h1 id="breaker-headline">Halted: this sync would zero SKUs — review before applying.</h1>
+        <p class="muted" id="breaker-reason"></p>
+
+        <div class="breaker-stats">
+          <div class="stat">
+            <span class="stat__value" id="breaker-count">0</span>
+            <span class="stat__label">SKUs would be set to 0</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="breaker-store">—</span>
+            <span class="stat__label">Store</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="breaker-pct">0%</span>
+            <span class="stat__label">Catalog value drop</span>
+          </div>
+        </div>
+
+        <div class="rule-box">
+          <span class="rule-box__label">Rule triggered</span>
+          <span class="rule-box__value" id="breaker-rule"></span>
+        </div>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel__head">
+        <h2>Sample of affected SKUs</h2>
+        <p class="panel__sub" id="breaker-sample-sub"></p>
+      </div>
+      <div class="table-wrap">
+        <table class="table table--data table--diff">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Product</th>
+              <th>Store</th>
+              <th class="num">Old qty</th>
+              <th class="num"></th>
+              <th class="num">New qty</th>
+              <th>Source of change</th>
+            </tr>
+          </thead>
+          <tbody id="breaker-tbody"><!-- injected --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="diff-footer">
+      <button class="btn btn--ghost" id="breaker-export-btn" type="button">Export halt report (.csv)</button>
+      <button class="btn btn--ghost" id="breaker-force-btn" type="button" disabled title="Safety lock: ReconStock does not allow bypassing a breaker trip from this view.">Force apply — disabled</button>
+      <button class="btn btn--primary" id="breaker-dismiss-btn" type="button">Dismiss sync (recommended)</button>
+    </div>
+  </section>
+
+  <!-- ===================== AUDIT LOG / ROLLBACK ===================== -->
+  <section id="view-audit" class="view" hidden>
+    <div class="panel__head panel__head--page">
+      <h1>Audit log &amp; rollback</h1>
+      <p class="muted">Every proposed and applied change, in order. Applied syncs can be reversed in one click.</p>
+    </div>
+
+    <section class="panel">
+      <div class="table-wrap">
+        <table class="table table--data">
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Sync</th>
+              <th>Store</th>
+              <th class="num">SKUs</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="audit-tbody"><!-- injected --></tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<footer class="app-footer">
+  <span>ReconStock Sync Console — concept demo, seeded data, no live Shopify connection.</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

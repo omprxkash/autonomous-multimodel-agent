@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>logo</title><style>
+* { margin:0; box-sizing:border-box; }
+body { width:1280px; height:720px; background:#F8FAFC; display:flex; align-items:center; justify-content:center; overflow:hidden;
+  font-family:"Segoe UI",-apple-system,Arial,sans-serif; }
+.wrap { text-align:center; }
+.logo { opacity:0; animation:up .8s ease .2s forwards; }
+.tag { color:#475569; font-size:26px; margin-top:22px; opacity:0; animation:up .8s ease 1s forwards; }
+@keyframes up { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+</style></head><body>
+<div class="wrap">
+  <div class="logo">
+    <svg viewBox="0 0 320 80" width="520" height="130">
+      <g fill="none" stroke="#0E2A47" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="27,13 12,13 12,67 27,67"/><polyline points="53,13 68,13 68,67 53,67"/><polyline points="28,42 37,53 54,27"/>
+      </g>
+      <text x="98" y="52" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="34" letter-spacing="0.3" fill="#0E2A47">ReconStock</text>
+    </svg>
+  </div>
+  <div class="tag">Safe inventory sync for multi-store Shopify merchants.</div>
+</div>
+</body></html>

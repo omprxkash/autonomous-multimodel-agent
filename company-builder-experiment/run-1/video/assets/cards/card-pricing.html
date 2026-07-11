@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>pricing</title><style>
+* { margin:0; box-sizing:border-box; }
+body { width:1280px; height:720px; background:#F8FAFC; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:44px; overflow:hidden;
+  font-family:"Segoe UI",-apple-system,Arial,sans-serif; }
+h1 { color:#0E2A47; font-size:40px; font-weight:700; opacity:0; animation:up .7s ease .2s forwards; }
+.row { display:flex; gap:22px; }
+.tier { background:#fff; border:1px solid #CBD5E1; border-radius:14px; padding:28px 34px; text-align:center; width:230px;
+  opacity:0; animation:up .6s ease forwards; }
+.tier:nth-child(1){ animation-delay:.6s } .tier:nth-child(2){ animation-delay:.8s }
+.tier:nth-child(3){ animation-delay:1s } .tier:nth-child(4){ animation-delay:1.2s }
+.tier.f { border-color:#0E2A47; box-shadow:0 10px 28px rgba(14,42,71,.14); }
+.name { color:#475569; font-weight:700; font-size:17px; }
+.price { color:#0E2A47; font-weight:700; font-size:42px; font-family:ui-monospace,Consolas,monospace; margin:8px 0 6px; }
+.per { color:#475569; font-size:14px; }
+.inc { color:#166534; font-size:14px; font-weight:600; margin-top:10px; }
+.note { color:#475569; font-size:17px; opacity:0; animation:up .7s ease 1.7s forwards; }
+@keyframes up { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+</style></head><body>
+<h1>Safety is in every tier — including Free.</h1>
+<div class="row">
+  <div class="tier"><div class="name">Free</div><div class="price">$0</div><div class="per">≤50 SKUs · 2 stores</div><div class="inc">dry-run · diff · audit log</div></div>
+  <div class="tier f"><div class="name">Standard</div><div class="price">$29</div><div class="per">≤2,000 SKUs · 2 stores</div><div class="inc">+ rollback · circuit breaker</div></div>
+  <div class="tier"><div class="name">Pro</div><div class="price">$49</div><div class="per">≤10,000 SKUs · 5 stores</div><div class="inc">+ scheduled auto-sync</div></div>
+  <div class="tier"><div class="name">Scale</div><div class="price">$99</div><div class="per">10k+ SKUs · multi-channel</div><div class="inc">+ connectors · team roles</div></div>
+</div>
+<div class="note">v1 scope, honestly: inventory quantities, store-to-store, approve-to-apply.</div>
+</body></html>

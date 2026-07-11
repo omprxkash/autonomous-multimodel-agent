@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <title>ReconStock — Candidate 1: Shield Check</title>
+  <!-- Mark: shield outline with checkmark inside. Reads as "verified before it happens". -->
+  <g fill="none" stroke="#0E2A47" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40,8 L68,20 L68,42 C68,60 56,70 40,76 C24,70 12,60 12,42 L12,20 Z"/>
+    <polyline points="25,42 35,52 56,28"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="98" y="52" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" letter-spacing="0.2" fill="#0E2A47">ReconStock</text>
+</svg>
