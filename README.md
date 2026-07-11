@@ -2,7 +2,7 @@
 
 # autonomous-multimodel-agent
 
-Five production-grade AI projects forming a complete, layered agent infrastructure — from routing and pipelines to workspace automation, phishing detection, and outreach.
+Six AI projects: a complete, layered agent infrastructure — routing, pipelines, workspace automation, phishing detection, outreach — plus an autonomous multi-agent company-builder experiment.
 
 For architecture and cross-project connections → [ARCHITECTURE.md](ARCHITECTURE.md)
 
@@ -68,6 +68,19 @@ Raw MIME → 9-stage pipeline → Verdict (SAFE / MARKETING / SUSPICIOUS / PHISH
 **Key features:** dual-bucket scoring (suspicion − trust, 0–100) · content-only NLP capped at SUSPICIOUS · STIX2 IOC export · concurrent OpenPhish / PhishTank / URLhaus lookups · 16 pytest tests (CI passing)
 
 **Stack:** FastAPI · asyncpg · Celery · Docker
+
+---
+
+### `company-builder/`
+Autonomous company-building experiment: one goal prompt takes an orchestrator agent from open-internet pain research to a finished go-to-market package with no human input mid-run. The run produced **ReconStock** (a safety-first Shopify inventory-sync concept): verified market research, an idea tournament with adversarial fact-checking, business plan, brand identity, a working product demo + landing page, launch/founder videos, and a red-team report — every claim traced to a fetched URL or disclosed in an honesty log.
+
+```
+Pain hunt (8 parallel researchers) → Tournament + adversarial verification → Business design → Brand → Build + verify → Videos → Red team → Package
+```
+
+**Key features:** multi-agent orchestration (parallel researchers, judge panels, skeptic verifiers, fresh-eyes auditor) · self-correction (caught its own misattributed stat and synthetic evidence) · 34-check Playwright end-to-end verification · fully local video production (Playwright screen recording + TTS + ffmpeg) · decision + honesty logs · start at `company-builder/run-1/RECAP.html`
+
+**Stack:** Claude Code multi-agent orchestration · Playwright · Node · ffmpeg-static
 
 ---
 

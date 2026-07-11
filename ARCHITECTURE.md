@@ -1,6 +1,6 @@
 # System Architecture
 
-This repository contains five production-grade AI projects that form a complete, layered AI engineering system. Each project works independently but they are designed to connect.
+This repository contains five production-grade AI projects that form a complete, layered AI engineering system. Each project works independently but they are designed to connect. A sixth project, `company-builder/`, is a standalone autonomous multi-agent experiment (one goal prompt → a complete go-to-market package); it doesn't participate in the service mesh below — see `company-builder/run-1/RECAP.html`.
 
 ---
 
