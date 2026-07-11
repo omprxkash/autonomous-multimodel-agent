@@ -1,6 +1,6 @@
 # Gap Analysis — run graded against the verbatim master prompt
 
-Date: 2026-07-12. The original master prompt was recovered verbatim from four source images (`photo-1..4.png`, transcribed into `MASTER_PROMPT.md`). The run had originally executed against a faithful reconstruction; this audit re-grades every clause of the exact text.
+Date: 2026-07-12. The verbatim master prompt lives in `MASTER_PROMPT.md`. The run had originally executed against a faithful reconstruction; this audit re-grades every clause of the exact text.
 
 ## Definition-of-done checklist
 
