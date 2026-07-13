@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DueCrew — Delgado Electric LLC</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23101B2C'/%3E%3Cpath d='M30 17.6 L66 17.6 L84 48 L66 78.4 L30 78.4 L12 48 Z' fill='none' stroke='%23F5A623' stroke-width='7' stroke-linejoin='round'/%3E%3Cpath d='M34 49 L44.5 59.5 L63 38.5' fill='none' stroke='%23F5A623' stroke-width='8.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 96 96" width="34" height="34" aria-hidden="true">
+        <rect width="96" height="96" rx="20" fill="#1B2B45"/>
+        <path d="M30 17.6 L66 17.6 L84 48 L66 78.4 L30 78.4 L12 48 Z" fill="none" stroke="#F5A623" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M34 49 L44.5 59.5 L63 38.5" fill="none" stroke="#F5A623" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name"><em>Due</em>Crew</span>
+    </div>
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-view="board">Board</button>
+      <button class="nav-tab" data-view="ce">CE ledger</button>
+      <button class="nav-tab" data-view="locker">COI locker</button>
+      <button class="nav-tab" data-view="alerts">Alerts</button>
+      <button class="nav-tab" data-view="rules">State rules</button>
+    </nav>
+    <div class="account">
+      <span class="demo-chip" title="All data on this screen is fictional demo data">DEMO — fictional data</span>
+      <span class="account-name">Delgado Electric LLC</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ BOARD ============ -->
+  <section id="view-board" class="view">
+    <div class="board-head">
+      <div>
+        <h1>Am I good to work?</h1>
+        <p class="board-sub" id="board-summary"></p>
+      </div>
+      <div class="standing-pill" id="standing-pill"></div>
+    </div>
+    <div class="cards" id="board-cards"></div>
+    <div class="registry-strip" id="registry-strip">
+      <div class="registry-title">
+        <span class="registry-dot"></span> Registry monitoring <span class="beta-tag">beta</span>
+      </div>
+      <div class="registry-items" id="registry-items"></div>
+      <p class="registry-note">Automated checks of public state license registries. Rolling out state by state — Texas live, Oklahoma in development. Timestamps shown are demo data.</p>
+    </div>
+  </section>
+
+  <!-- ============ DETAIL (overlays board) ============ -->
+  <section id="view-detail" class="view" hidden>
+    <button class="back-link" data-back="board">&larr; Back to board</button>
+    <div id="detail-body"></div>
+  </section>
+
+  <!-- ============ CE LEDGER ============ -->
+  <section id="view-ce" class="view" hidden>
+    <h1>CE ledger</h1>
+    <p class="view-sub">Continuing education, tracked against what your state actually requires.</p>
+    <div class="ce-block">
+      <div class="ce-head">
+        <div>
+          <h2>Texas — Master Electrician <span class="mono">#TME-88214</span></h2>
+          <p class="ce-req">TDLR requires <strong>4 hours</strong> of approved CE before each annual renewal — NEC, NFPA&nbsp;70E safety, and state law.</p>
+        </div>
+        <div class="ce-meter-wrap">
+          <div class="ce-meter"><div class="ce-meter-fill" id="ce-fill"></div></div>
+          <span class="ce-meter-label mono" id="ce-label"></span>
+        </div>
+      </div>
+      <table class="table" id="ce-table">
+        <thead><tr><th>Date</th><th>Course</th><th>Provider</th><th>Hours</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="ce-actions">
+        <button class="btn btn-primary" id="log-ce-btn">Log 2-hour course — “2026 NEC significant changes”</button>
+        <span class="hint">Approved-provider courses run $9–20 online. Links to TDLR-registered providers appear here.</span>
+      </div>
+    </div>
+    <div class="ce-block ce-block-dim">
+      <h2>Oklahoma — Electrical Journeyman <span class="mono">#OKJ-4471</span></h2>
+      <p class="ce-req">CIB requires CE for renewal. Requirement drafted in our dataset — verification against the state board in progress. We alert on the renewal date either way.</p>
+    </div>
+  </section>
+
+  <!-- ============ COI LOCKER ============ -->
+  <section id="view-locker" class="view" hidden>
+    <h1>COI locker</h1>
+    <p class="view-sub">Your current certificates, one live link. GCs stop asking; you stop digging through email.</p>
+    <div class="locker-grid" id="locker-grid"></div>
+    <div class="share-panel">
+      <div>
+        <h2>Live share link</h2>
+        <p class="view-sub">Always serves whatever is current. Never a stale PDF.</p>
+      </div>
+      <div class="share-row">
+        <code class="share-url mono">duecrew.com/s/delgado-electric</code>
+        <button class="btn btn-primary" id="copy-link-btn">Copy link</button>
+      </div>
+      <div class="share-views">
+        <span class="eyebrow">Recently opened by</span>
+        <ul>
+          <li><strong>Caprock Builders</strong> — 2 days ago</li>
+          <li><strong>Meridian West GC</strong> — 6 days ago</li>
+          <li><strong>City of Tulsa permitting</strong> — 12 days ago</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ALERTS ============ -->
+  <section id="view-alerts" class="view" hidden>
+    <h1>Alerts</h1>
+    <p class="view-sub">Nudges get louder as the date gets closer: 90 &rarr; 60 &rarr; 30 &rarr; 14 &rarr; 7 &rarr; 1 day.</p>
+    <ul class="alert-feed" id="alert-feed"></ul>
+  </section>
+
+  <!-- ============ STATE RULES ============ -->
+  <section id="view-rules" class="view" hidden>
+    <h1>State rules library</h1>
+    <p class="view-sub">The dataset that powers your board. v0.1 — <strong>Texas rules verified against TDLR</strong>; other rows drafted from published state sources and awaiting verification. We show our homework.</p>
+    <div class="table-scroll">
+      <table class="table" id="rules-table">
+        <thead><tr><th>State</th><th>Trade</th><th>Renewal cycle</th><th>CE required</th><th>Late/delinquent</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="registry-note">Sources: state licensing boards (TDLR, CSLB, et al.). In production every row links to the primary source and carries a last-verified date.</p>
+  </section>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+<footer class="app-footer">DueCrew product demo — every business, person, credential, and timestamp on this screen is fictional. Texas CE rule (4 hours, TDLR) is real: tdlr.texas.gov/electricians/elecce.htm</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

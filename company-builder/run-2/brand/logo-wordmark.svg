@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 56" width="270" height="56" role="img" aria-label="DueCrew">
+  <text x="4" y="42" font-family="'Segoe UI', -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="38" font-weight="800" letter-spacing="-0.8">
+    <tspan fill="#F5A623">Due</tspan><tspan fill="#101B2C">Crew</tspan>
+  </text>
+</svg>

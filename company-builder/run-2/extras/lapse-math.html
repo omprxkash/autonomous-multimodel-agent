@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lapse Math — what one missed date costs you</title>
+<style>
+  /* Print-first one-pager. Designed to photocopy legibly in pure B/W (brand guidelines §6). */
+  :root{--ink:#101B2C;--amber:#D98E0B;--slate:#55617A;--paper:#F7F5F0;--line:#B9B2A4}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:#DDD9D0;line-height:1.45}
+  .sheet{max-width:816px;margin:24px auto;background:var(--paper);padding:52px 58px;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+  @media print{body{background:#fff}.sheet{margin:0;box-shadow:none;max-width:none;padding:24px 30px}}
+  .head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  h1{font-size:30px;font-weight:800;letter-spacing:-.02em}
+  .brand{font-weight:800;font-size:17px}.brand em{font-style:normal;color:var(--amber)}
+  .lead{font-size:15px;color:var(--slate);margin-bottom:22px;max-width:600px}
+  h2{font-size:15px;font-weight:800;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  td,th{border:1.5px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--slate)}
+  .blank{min-width:110px;color:var(--slate)}
+  .blank::after{content:"$ ______________"}
+  .days::after{content:"______ days"}
+  .mono{font-family:Consolas,monospace;font-weight:700}
+  .total td{border-width:2.5px;font-weight:800;font-size:16px}
+  .facts{background:#fff;border:1.5px solid var(--line);padding:14px 18px;margin:20px 0;font-size:13.5px}
+  .facts li{margin:5px 0 5px 18px}
+  .foot{margin-top:24px;padding-top:12px;border-top:1.5px solid var(--line);font-size:12px;color:var(--slate);display:flex;justify-content:space-between;gap:20px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="head">
+    <h1>Lapse Math</h1>
+    <span class="brand"><em>Due</em>Crew — we watch the dates so you can work</span>
+  </div>
+  <p class="lead">Tape this inside the van door. Fill it in once with your own numbers and
+  you'll know exactly what one missed renewal date costs <strong>you</strong> — not some
+  average contractor. Takes five minutes and a phone call to your board's website.</p>
+
+  <h2>1 · The renewal you already owe</h2>
+  <table>
+    <tr><th>Item</th><th>On time</th><th>If it lapses</th></tr>
+    <tr><td>License renewal fee (your state)</td><td class="blank"></td><td class="blank"></td></tr>
+    <tr><td>CE hours you'd have to cram (course cost + a day off tools)</td><td class="blank"></td><td class="blank"></td></tr>
+    <tr><td>Reinstatement / reapplication fee if you're past the grace window</td><td class="mono">—</td><td class="blank"></td></tr>
+  </table>
+
+  <h2>2 · The days you can't work</h2>
+  <table>
+    <tr><th>Question</th><th>Your answer</th></tr>
+    <tr><td>Days to process a delinquent renewal in your state</td><td class="days"></td></tr>
+    <tr><td>Your day rate (what a stopped day actually costs you)</td><td class="blank"></td></tr>
+    <tr><td class="mono">Days × day rate =</td><td class="blank"></td></tr>
+  </table>
+
+  <h2>3 · The one nobody budgets</h2>
+  <table>
+    <tr><td>If a GC finds your COI expired: withheld progress payments while you scramble
+    (documented case: <span class="mono">11 days, $47,000</span>)</td><td class="blank"></td></tr>
+    <tr class="total"><td>YOUR PERSONAL LAPSE NUMBER (add the right column)</td><td class="blank"></td></tr>
+  </table>
+
+  <div class="facts">
+    <strong>Things that are true whether or not you do this math:</strong>
+    <ul>
+      <li>California's board: work performed while the license is expired "is considered to be
+      unlicensed and disciplinary action can be taken against you." (cslb.ca.gov)</li>
+      <li>Unlicensed contracting in CA: misdemeanor; administrative fines $200–$15,000. (cslb.ca.gov)</li>
+      <li>Texas electricians owe 4 hours of TDLR-approved CE before every renewal. (tdlr.texas.gov)</li>
+      <li>The $47,000 case above is an insurance agency's client account, Texas.
+      (theagentsoffice.com)</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span>Free sheet from DueCrew — one board for your license, CE hours, COIs and bond,
+    with alerts that get louder. <strong>duecrew.com</strong></span>
+    <span>Share it. Copy it. No signup.</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "name": "DueCrew state-rules starter dataset",
+    "version": "0.1.0",
+    "date": "2026-07-13",
+    "honesty": "Rows marked verified=true were checked against the cited primary/near-primary source during this run. Rows marked verified=false are drafted from commonly published patterns and MUST be verified against the state board before production use. This file is a genuine seed asset, not a finished dataset.",
+    "statuses": ["verified", "partial", "draft"]
+  },
+  "rules": [
+    {
+      "state": "TX", "trade": "electrician", "board": "TDLR",
+      "renewal_cycle": "annual",
+      "ce_hours": 4,
+      "ce_scope": "NEC, NFPA 70E safety, Texas law and rules; 1 CE hour = 50 min instruction; multiple license classes still total 4 hours",
+      "late_rule": "delinquent renewal fee; work on expired license is unlicensed work",
+      "status": "verified",
+      "source": "https://www.tdlr.texas.gov/electricians/elecce.htm",
+      "checked": "2026-07-12"
+    },
+    {
+      "state": "CA", "trade": "contractor (C-10 electrical)", "board": "CSLB",
+      "renewal_cycle": "2 years (draft — pattern, not re-verified this run)",
+      "ce_hours": null,
+      "ce_scope": "draft",
+      "late_rule": "VERIFIED: delinquent fee cannot be waived; retroactive renewal only within 90 days for circumstances beyond your control; 5 years to renew before reapplying; 'Any work performed while the license is expired is considered to be unlicensed and disciplinary action can be taken against you.'",
+      "status": "partial",
+      "source": "https://www.cslb.ca.gov/Contractors/Maintain_License/Renew_License/Failing_To_Renew_Your_License.aspx",
+      "checked": "2026-07-12"
+    },
+    { "state": "OK", "trade": "electrician", "board": "CIB", "renewal_cycle": "annual (draft)", "ce_hours": null, "ce_scope": "draft", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "FL", "trade": "electrician", "board": "DBPR", "renewal_cycle": "2 years (draft)", "ce_hours": 14, "ce_scope": "draft — 14-hr pattern", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "AZ", "trade": "contractor", "board": "ROC", "renewal_cycle": "2 years (draft)", "ce_hours": null, "ce_scope": "draft", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "CO", "trade": "electrician", "board": "DORA", "renewal_cycle": "3 years (draft)", "ce_hours": 24, "ce_scope": "draft — 24-hr pattern", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "WA", "trade": "electrician", "board": "L&I", "renewal_cycle": "3 years (draft)", "ce_hours": 24, "ce_scope": "draft — 24-hr pattern", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "OR", "trade": "electrician", "board": "BCD", "renewal_cycle": "3 years (draft)", "ce_hours": 24, "ce_scope": "draft — 24-hr pattern", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "NC", "trade": "electrician", "board": "Board of Examiners", "renewal_cycle": "annual (draft)", "ce_hours": null, "ce_scope": "draft", "late_rule": "draft", "status": "draft", "source": null, "checked": null },
+    { "state": "GA", "trade": "electrician", "board": "Div. II licensing", "renewal_cycle": "2 years (draft)", "ce_hours": null, "ce_scope": "draft", "late_rule": "draft", "status": "draft", "source": null, "checked": null }
+  ]
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WideTally — Run 3 Recap</title>
+<link rel="icon" href="brand/logo-mark.svg" type="image/svg+xml">
+<style>
+* { box-sizing: border-box; margin: 0; }
+:root { --ink:#16324F; --paper:#FAF6EF; --brass:#B8862D; --brass-dark:#D9A93F; --slate:#5B6B7C; --line:#E5DCC9; --green:#1E7A46; --red:#A63A2B;
+ --sans:'Segoe UI',system-ui,sans-serif; --serif:Georgia,'Iowan Old Style',serif; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.6; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 22px 70px; }
+h1, h2, h3 { font-family: var(--serif); font-weight: normal; }
+a { color: var(--brass); }
+header { padding: 40px 0 8px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.wordmark { font-family: var(--serif); font-size: 34px; }
+.wordmark em { font-style: normal; color: var(--brass); }
+.runtag { margin-left: auto; font-size: 13px; color: var(--slate); letter-spacing: .12em; text-transform: uppercase; }
+.lede { font-size: 21px; max-width: 62ch; margin: 18px 0 8px; }
+.lede b { color: var(--brass); font-weight: 600; }
+.meta { color: var(--slate); font-size: 14px; margin-bottom: 26px; }
+section { margin-top: 42px; }
+h2 { font-size: 26px; margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card { border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; background: #FFFDF8; }
+.card h3 { font-size: 18px; margin-bottom: 6px; }
+.card p { font-size: 14.5px; color: var(--slate); }
+.card .links { margin-top: 10px; font-size: 14.5px; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 18px 0; }
+.stat { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.stat .v { font-size: 26px; font-variant-numeric: tabular-nums; }
+.stat .l { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); }
+.quote { border-left: 3px solid var(--brass); padding: 4px 0 4px 16px; margin: 14px 0; font-style: italic; }
+.quote cite { display: block; font-style: normal; font-size: 13px; color: var(--slate); margin-top: 4px; }
+ol.steps { padding-left: 22px; } ol.steps li { margin-bottom: 8px; }
+.objections { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 26px 28px; }
+.objections h2 { color: var(--paper); border-bottom-color: #2C4A6E; }
+.objections li { margin-bottom: 10px; font-size: 15px; }
+.objections a { color: var(--brass-dark); }
+.objections .tag { font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 4px; padding: 1px 7px; margin-right: 8px; background: #7A2E20; }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+th { text-align: left; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); padding: 8px 10px; border-bottom: 2px solid var(--line); }
+td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+video { width: 100%; border-radius: 10px; border: 1px solid var(--line); background: #000; }
+.vid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.vid-grid p { font-size: 13.5px; color: var(--slate); margin-top: 6px; }
+footer { margin-top: 60px; color: var(--slate); font-size: 13.5px; border-top: 1px solid var(--line); padding-top: 18px; }
+@media (max-width: 760px) { .grid, .vid-grid, .stat-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <img src="brand/logo-mark.svg" width="44" height="44" alt="">
+  <span class="wordmark">Wide<em>Tally</em></span>
+  <span class="runtag">Autonomous build · Run 3 · July 2026</span>
+</header>
+
+<p class="lede"><b>WideTally</b> is a local-first royalty &amp; ad-ROI ledger for self-published authors who sell beyond Amazon. It reads the report files authors already download — on their machine, never a server — and shows what every book actually earns after ads. <b>$59 once</b>, against incumbents at $120–$348/yr.</p>
+<p class="meta">Fictional company, built end-to-end as a research exercise. Every external claim links to a source fetched during the run. Voiceover is Windows TTS; sample data is synthetic — both disclosed on-screen. Full disclosures: <a href="record/honesty.md">honesty.md</a>.</p>
+
+<div class="stat-row">
+  <div class="stat"><div class="v">3</div><div class="l">lanes yielded verified pain</div></div>
+  <div class="stat"><div class="v">85/100</div><div class="l">tournament winner score</div></div>
+  <div class="stat"><div class="v">7/7</div><div class="l">load-bearing claims re-verified</div></div>
+  <div class="stat"><div class="v">$97 vs $555</div><div class="l">3-yr cost vs cheapest rival</div></div>
+</div>
+
+<section>
+  <h2>The thesis in 60 seconds</h2>
+  <ol class="steps">
+    <li><b>Verified pain:</b> wide authors reconcile money across 3–8 dashboards with no API and no common format — a daily/monthly ritual they hate.</li>
+    <li><b>Verified vacuum:</b> the leading wide-author tracker is publicly called unreliable by the category's kingmaker reviewer; the only local-first predecessor (TrackerBox) was abandoned in 2019; Amazon confirmed in writing there is <i>no API</i> — so every tool ultimately lives off the same downloadable files.</li>
+    <li><b>The move:</b> parse those files locally. Same data path as the cloud tools, minus the credentials, downtime, and subscription. The demo below <i>is</i> the architecture, not a mock of it.</li>
+  </ol>
+  <div class="quote">“On average it takes me 15 minutes to adequately review all sales platforms… that would equate to 92 hours a year wasted.”<cite>Dave Chesson, Kindlepreneur — <a href="https://kindlepreneur.com/book-sales-tracker/">source</a> (fetched)</cite></div>
+  <div class="quote">“Right now, Amazon Selling Partner API does not return any data related to Kindle Direct Publishing (KDP).”<cite>Amazon Selling Partner Developer Services, Oct 2025 — <a href="https://github.com/amzn/selling-partner-api-models/discussions/4975">source</a> (fetched)</cite></div>
+</section>
+
+<section>
+  <h2>Try it (2 minutes)</h2>
+  <p>Run <code>node serve.js</code> in this folder, then: open the <a href="product/index.html">product demo</a> → click <b>Load sample library</b> → tour Ledger / Books / Ads → drag any CSV from <code>product/sample-data/</code> onto the Imports tab and watch it parse in-browser. Then read the <a href="site/index.html">landing page</a> as a customer would.</p>
+</section>
+
+<section>
+  <h2>Watch</h2>
+  <div class="vid-grid">
+    <div><video src="video/launch.mp4" controls preload="metadata"></video><p><b>Launch video</b> · 54s · product footage + title cards, synthesized music</p></div>
+    <div><video src="video/founder.mp4" controls preload="metadata"></video><p><b>Founder video</b> · 64s · calm, zero-hype, TTS-voiced (disclosed) · <a href="video/founder-script.md">script</a></p></div>
+  </div>
+</section>
+
+<section class="objections">
+  <h2>What a skeptic should read first</h2>
+  <p style="margin-bottom:12px">The red team ran after the build and drew blood. Highlights (full report: <a href="record/red-team.md">red-team.md</a>):</p>
+  <ul>
+    <li><span class="tag">WOUND</span>WideTally serves monthly reconciliation and ad decisions — it cannot serve the compulsive <i>daily-refresh</i> moment the pain evidence also contains. One landing-page line still overclaims this; left visible deliberately.</li>
+    <li><span class="tag">WOUND</span>The “leader is failing” claim rests heavily on one (authoritative, affiliate-funded) reviewer, and may have a shelf life.</li>
+    <li><span class="tag">WOUND</span>Privacy as a purchase driver is an unproven hypothesis — the verified pains are reliability and money. The launch plan carries an explicit kill-signal metric.</li>
+    <li><span class="tag">WOUND</span>TrackerBox’s 2019 abandonment warns that one-time pricing may underfund the parser treadmill; the Updates Pass is the bet that it won’t.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Every deliverable</h2>
+  <div class="grid">
+    <div class="card"><h3>Research</h3><p>Four pain-hunt lanes, a scored tournament, and a skeptic pass that re-fetched every load-bearing claim first-hand.</p>
+      <div class="links"><a href="research/lane-creators.md">creators</a><a href="research/lane-verticals.md">verticals</a><a href="research/lane-developers.md">developers</a><a href="research/lane-hobbyist.md">hobbyist</a><a href="research/tournament.md">tournament</a><a href="research/verification.md">verification</a><a href="research/verification-addendum.md">verification addendum</a></div></div>
+    <div class="card"><h3>Business</h3><p>Plan grounded in fetched sources; pricing vs verified incumbent prices; a 30-day launch plan aimed at the exact communities the complaints came from.</p>
+      <div class="links"><a href="business/business-plan.md">business plan</a><a href="business/pricing.md">pricing</a><a href="business/launch-plan.md">launch plan</a><a href="extras/launch-posts.md">week-1 post drafts</a></div></div>
+    <div class="card"><h3>The unexpected deliverable</h3><p>The <b>Royalty Report Format Registry</b> — the product's core domain knowledge published as free documentation: content moat, trust builder, and community change-detection in one.</p>
+      <div class="links"><a href="business/format-registry.md">format-registry.md</a></div></div>
+    <div class="card"><h3>Brand</h3><p>Tally-stroke mark (four strokes + a brass pen-line fifth), Ink/Paper/Brass palette, complete guidelines a stranger could design from.</p>
+      <div class="links"><a href="brand/brand-guidelines.md">guidelines</a><a href="brand/logo.svg">logo</a><a href="brand/logo-mark.svg">mark</a></div></div>
+    <div class="card"><h3>Product</h3><p>Working demo: drag-and-drop CSV parsing in-browser, format fingerprinting, series roll-ups, royalty-true ad math, validated chart palette.</p>
+      <div class="links"><a href="product/index.html">open the demo</a><a href="product/sample-data/README.txt">sample data</a></div></div>
+    <div class="card"><h3>Site</h3><p>Landing page with sourced problem quotes (labeled as research, not testimonials), honest comparison table, plain pricing, FAQ.</p>
+      <div class="links"><a href="site/index.html">landing page</a></div></div>
+    <div class="card"><h3>Record</h3><p>Decision log with reasons, full honesty disclosures, red team, self-grade, screenshots (desktop+mobile), extracted video frames.</p>
+      <div class="links"><a href="record/decisions.md">decisions</a><a href="record/honesty.md">honesty</a><a href="record/red-team.md">red team</a><a href="record/gap-analysis.md">gap analysis</a></div></div>
+    <div class="card"><h3>Tooling</h3><p>Everything reproducible: data generator, reddit research fetcher, Playwright screenshot/recording rigs, ffmpeg assembly, TTS script.</p>
+      <div class="links"><a href="README.md">README (run locally)</a></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Key verified facts (each fetched this run)</h2>
+  <table>
+    <tr><th>Fact</th><th>Source</th></tr>
+    <tr><td>No API returns KDP sales/royalty data (Amazon, official, Oct 2025)</td><td><a href="https://github.com/amzn/selling-partner-api-models/discussions/4975">GitHub discussion #4975</a></td></tr>
+    <tr><td>Cross-platform checking ≈ 15 min/day ≈ 92 hrs/yr; KDP reporting “not great”</td><td><a href="https://kindlepreneur.com/book-sales-tracker/">Kindlepreneur tracker roundup</a></td></tr>
+    <tr><td>Leading wide tracker: “tried to open the program… and got nothing”; recommendation withdrawn</td><td><a href="https://kindlepreneur.com/scribecount-review/">Kindlepreneur ScribeCount review</a></td></tr>
+    <tr><td>Paid category exists: $5–29/mo across five tools (prices per roundup above)</td><td>same sources</td></tr>
+    <tr><td>Local one-time-purchase precedent, abandoned 2019 (v1.0.74)</td><td><a href="https://www.storyboxsoftware.com/tdownload.htm">TrackerBox / StoryBox</a></td></tr>
+    <tr><td>62% of surveyed working authors publish at least partly outside KDP Select (n=1,346)</td><td><a href="https://www.writtenwordmedia.com/2025-indie-author-survey-results-insights-into-self-publishing-for-authors/">Written Word Media 2025 survey</a></td></tr>
+    <tr><td>KDP Select fund, May 2026: $70.3M (Amazon’s own page footer)</td><td><a href="https://kdp.amazon.com/en_US/help/topic/G201488550">KDP help (fetched via curl)</a></td></tr>
+    <tr><td>Author voices: ads-ROI confusion; 18-book veteran refreshing “a dozen times a day”</td><td><a href="https://old.reddit.com/r/selfpublish/comments/1irnc2e/im_done_with_amazon_ads/">r/selfpublish (ads)</a> · <a href="https://old.reddit.com/r/selfpublish/comments/1s02ax0/anyone_else_constantly_refreshing_their_kdp/">r/selfpublish (refresh)</a></td></tr>
+    <tr><td>widetally.com unregistered as of 2026-07-13 (RDAP 404; checked, not purchased)</td><td>Verisign RDAP</td></tr>
+  </table>
+</section>
+
+<footer>Run 3 · differentiated from run 1 (Shopify B2B SaaS) and run 2 (B2B/SMB) by mandate: prosumer/creator territory, local-first architecture, pay-once pricing. Built with no spending, nothing published, nothing invented — see <a href="record/honesty.md">honesty.md</a> for the exact edges of that claim.</footer>
+</div>
+</body>
+</html>

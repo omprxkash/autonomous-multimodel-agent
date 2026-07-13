@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECAP — DueCrew (run-2)</title>
+<style>
+  :root{--ink:#101B2C;--navy700:#1B2B45;--paper:#F7F5F0;--paper100:#EDEAE2;--amber:#F5A623;
+    --amber600:#D98E0B;--good:#2E9E5B;--act:#D64545;--slate4:#8A94A6;--slate6:#55617A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",-apple-system,Roboto,Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;font-size:16.5px}
+  .hero{background:var(--ink);color:var(--paper);padding:54px 24px;
+    background-image:linear-gradient(rgba(27,43,69,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(27,43,69,.4) 1px,transparent 1px);background-size:48px 48px}
+  .shell{max-width:960px;margin:0 auto;padding:0 24px}
+  .hero .shell{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .hero h1{font-size:34px;font-weight:800;letter-spacing:-.02em}
+  .hero h1 em{font-style:normal;color:var(--amber)}
+  .hero p{color:var(--slate4);max-width:640px;margin-top:8px}
+  section{padding:36px 0}
+  h2{font-weight:800;letter-spacing:-.02em;font-size:24px;margin-bottom:14px}
+  h3{font-weight:800;font-size:17px;margin:18px 0 6px}
+  p+p{margin-top:10px}
+  a{color:var(--amber600);font-weight:600}
+  code{font-family:Consolas,monospace;background:var(--paper100);padding:2px 7px;border-radius:6px;font-size:.9em}
+  .cardgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin-top:14px}
+  .card{background:#fff;border:1px solid var(--paper100);border-radius:10px;padding:18px 20px}
+  .card h3{margin:0 0 6px}
+  .card p{color:var(--slate6);font-size:.93rem}
+  .card ul{margin:8px 0 0 18px;color:var(--slate6);font-size:.93rem}
+  .band{background:var(--ink);color:var(--paper)}
+  .band h2{color:var(--paper)}
+  .band p, .band li{color:var(--slate4)}
+  .band code{background:var(--navy700);color:var(--amber);border:1px solid #2C4165}
+  .risk{background:#fff;border:1px solid var(--paper100);border-left:4px solid var(--act);border-radius:10px;padding:16px 20px;margin:10px 0}
+  .risk b{color:var(--act)}
+  .step{display:flex;gap:14px;margin:10px 0;align-items:baseline}
+  .step code{white-space:nowrap}
+  .quote{border-left:4px solid var(--amber);padding:10px 18px;background:#fff;border-radius:0 10px 10px 0;margin:14px 0;font-size:1.05rem}
+  .quote span{display:block;color:var(--slate6);font-size:.85rem;margin-top:6px}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:10px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--slate6);padding:8px 10px;border-bottom:2px solid var(--paper100)}
+  td{padding:8px 10px;border-bottom:1px solid var(--paper100);vertical-align:top}
+  .foot{padding:30px 0 60px;color:var(--slate6);font-size:.85rem}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="shell">
+    <svg viewBox="0 0 96 96" width="84" height="84"><rect width="96" height="96" rx="20" fill="#1B2B45"/><path d="M30 17.6 L66 17.6 L84 48 L66 78.4 L30 78.4 L12 48 Z" fill="none" stroke="#F5A623" stroke-width="7" stroke-linejoin="round"/><path d="M34 49 L44.5 59.5 L63 38.5" fill="none" stroke="#F5A623" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <h1><em>Due</em>Crew — run-2 recap</h1>
+      <p>A compliance deadline guard for solo licensed trade contractors: license renewals,
+      CE hours, insurance and bond dates on one red/amber/green board, with alerts that get
+      louder. Built end-to-end from open-internet research in one autonomous run — nothing
+      published, nothing purchased, every claim traced to a fetched URL or flagged.</p>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+<section>
+  <h2>The business in five minutes</h2>
+  <p><strong>Who:</strong> the ~1.76M electricians, plumbers and HVAC techs (BLS May 2025) —
+  especially the solo operators among America's ~2.88M no-employee construction businesses —
+  whose right to earn is gated by a stack of expiring documents and whose "system" is a
+  glovebox and memory.</p>
+  <div class="quote">"Any work performed while the license is expired is considered to be
+    unlicensed and disciplinary action can be taken against you."
+    <span>California Contractors State License Board — fetched primary source; the pain is regulatory, not cosmetic.</span></div>
+  <p><strong>What:</strong> one screen answering "Am I good to work?" — every credential as a
+  Good/Watch/Act card; escalating SMS/email alerts (90→1 days); a CE ledger that counts hours
+  against what the state actually requires (Texas verified against TDLR in v0.1); a COI
+  locker with a live share link for GCs; and a per-state rules library where every row shows
+  its source and verification status.</p>
+  <p><strong>Why it wins the niche:</strong> generic expiry-reminder tools know nothing about
+  trades; every funded compliance player (SkillSignal, SimpleCerts, PermitFlow's $54M
+  GC-side world) sells to the GC to police subs. Nobody found in this run's scans builds for
+  the tradesperson's side of the table. <strong>Model:</strong> $12/mo · $99/yr solo, $29/mo
+  crew, 200 founding lifetime seats at $199 as the built-in willingness-to-pay test.</p>
+</section>
+
+<section class="band" style="padding:36px 24px;margin:0 -24px">
+  <div>
+    <h2>Run the site &amp; demo locally</h2>
+    <div class="step"><code>cd run-2/_tools</code><span>then</span> <code>npm install</code> <span>(playwright + ffmpeg-static; only needed for re-verification/re-rendering)</span></div>
+    <div class="step"><code>node verify/server.js 8231</code><span>→ site at <a href="http://localhost:8231/site/">localhost:8231/site/</a>, demo at <a href="http://localhost:8231/product/">localhost:8231/product/</a></span></div>
+    <p style="margin-top:10px">No server handy? <a href="site/index.html" style="color:var(--amber)">site/index.html</a> and
+    <a href="product/index.html" style="color:var(--amber)">product/index.html</a> also open straight from disk.
+    In the demo, click the red Oklahoma card → "Mark renewed", and log CE hours in the CE ledger — both flows are live.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Watch</h2>
+  <div class="cardgrid">
+    <div class="card"><h3><a href="video/launch.mp4">launch.mp4</a> — 59s</h3>
+      <p>Feed-ready, works muted: hook → the board → the $47k stakes card → renew flow →
+      CE flow → pricing → close. Script: <a href="video/launch-script.md">launch-script.md</a></p></div>
+    <div class="card"><h3><a href="video/founder.mp4">founder.mp4</a> — 107s</h3>
+      <p>Calm, zero-hype founder read (Windows TTS, disclosed as synthetic) over a slow
+      product tour. Script: <a href="video/founder-script.md">founder-script.md</a></p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Every deliverable</h2>
+  <table>
+    <tr><th>Area</th><th>Files</th></tr>
+    <tr><td><strong>Research</strong></td><td>
+      <a href="research/pain-hunt.md">pain-hunt.md</a> (5-researcher consolidated evidence) ·
+      <a href="research/verification.md">verification.md</a> (claim-by-claim confidence log) ·
+      <a href="research/tournament.md">tournament.md</a> (6-idea scored tournament + why each loser lost)</td></tr>
+    <tr><td><strong>Business</strong></td><td>
+      <a href="business/thesis.md">thesis.md</a> ·
+      <a href="business/model.md">model.md</a> (pricing, unit economics, TAM math labeled inference) ·
+      <a href="business/gtm.md">gtm.md</a> (90-day plan) ·
+      <a href="business/competitors.md">competitors.md</a></td></tr>
+    <tr><td><strong>Brand</strong></td><td>
+      <a href="brand/guidelines.md">guidelines.md</a> (build-an-asset-from-this-alone complete) ·
+      <a href="brand/logo-mark.svg">logo-mark.svg</a> ·
+      <a href="brand/logo-lockup.svg">logo-lockup.svg</a> ·
+      <a href="brand/logo-lockup-dark.svg">logo-lockup-dark.svg</a> ·
+      <a href="brand/logo-wordmark.svg">logo-wordmark.svg</a> ·
+      <a href="brand/name-search.md">name-search.md</a> (RDAP checks; duecrew.com unregistered 2026-07-12, not purchased)</td></tr>
+    <tr><td><strong>Product</strong></td><td>
+      <a href="product/index.html">Working demo</a> (board, CE ledger, COI locker, alerts, state rules — two live flows) ·
+      <a href="product/data/state-rules.json">state-rules.json</a> (seed dataset with per-row verification status)</td></tr>
+    <tr><td><strong>Site</strong></td><td><a href="site/index.html">Landing page</a> (evidence-cited stakes, pricing, FAQ, waitlist; sources footnoted in the footer)</td></tr>
+    <tr><td><strong>Video</strong></td><td>
+      <a href="video/launch.mp4">launch.mp4</a> · <a href="video/founder.mp4">founder.mp4</a> ·
+      scripts (<a href="video/launch-script.md">launch</a>, <a href="video/founder-script.md">founder</a>) ·
+      assets in <code>video/assets/</code></td></tr>
+    <tr><td><strong>Extras</strong></td><td>
+      <a href="extras/lapse-math.html">Lapse Math printable</a> (the unexpected one — a van-door worksheet lead magnet) ·
+      <a href="extras/investor-teaser.html">investor teaser</a> (red-team objections printed on it) ·
+      <a href="extras/launch-posts.md">first-week posts</a> ·
+      <a href="extras/onboarding-emails.md">onboarding email sequence</a></td></tr>
+    <tr><td><strong>Record</strong></td><td>
+      <a href="record/decisions.md">decisions.md</a> (14 logged judgment calls) ·
+      <a href="record/red-team.md">red-team.md</a> ·
+      <a href="record/honesty.md">honesty.md</a> ·
+      <a href="record/gap-analysis.md">gap-analysis.md</a> (self-grading vs. definition of done) ·
+      screenshots in <code>record/shots/</code> (desktop, mobile, video frames)</td></tr>
+    <tr><td><strong>Tooling</strong></td><td><code>_tools/</code> — static server, smoke test, recorder, TTS, music synth, ffmpeg assembly (all local, all free)</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Why you might not be convinced — the red team's surviving objections</h2>
+  <div class="risk"><b>Willingness to pay is unproven.</b> No customer could be contacted in
+  this run. The $199 founding-seat sale is the designed falsification test: if 200 seats
+  don't sell in ~90 days, the thesis fails cheaply.</div>
+  <div class="risk"><b>The moat is speed, not structure.</b> The alert primitive is a weekend
+  build; four generic expiry tools already exist. The bet is the maintained, cited state-rules
+  dataset + trade-native workflows — copyable in months by anyone funded.</div>
+  <div class="risk"><b>Annual value events invite seasonal churn.</b> COI share link and CE
+  ledger are the retention mitigations; they are plausible, not proven.</div>
+  <div class="risk"><b>The $47,000 anchor is a vendor anecdote</b> — real, fetched, but an
+  insurance agency's client story, labeled as such everywhere it appears.</div>
+  <p>Full adversarial pass, including the objections with no comfortable rebuttal:
+  <a href="record/red-team.md">record/red-team.md</a></p>
+</section>
+
+<section>
+  <h2>Evidence honesty, in one line</h2>
+  <p>Verified primary/near-primary anchors carry the thesis (CSLB, TDLR, BLS reprint, the
+  fetched COI-case page); everything weaker is flagged <em>[snippet]</em> or
+  <em>inference</em> at point of use; the complete disclosure ledger is in
+  <a href="record/honesty.md">record/honesty.md</a>.</p>
+</section>
+
+<p class="foot">DueCrew is a fictional pre-launch company produced by an autonomous
+business-building run on 2026-07-12/13. Nothing was published, purchased, or sent to any
+real person. duecrew.com was RDAP-checked unregistered and deliberately not bought.</p>
+</div>
+</body>
+</html>

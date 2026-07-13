@@ -1,51 +1,70 @@
-# company-builder
+# Autonomous Company Builder — three companies, one prompt
 
-One goal prompt → a complete company, built autonomously with no human input mid-run.
+An experiment: an AI agent was given a single goal prompt ([MASTER_PROMPT.md](MASTER_PROMPT.md)) —
+*build a complete company from scratch, alone, asking nothing* — and executed it three times,
+each run independently researched from live internet pain, each producing a finished
+go-to-market package: verified market research, business plan, brand system, working product
+demo, landing page, launch + founder videos, adversarial red team, and a self-graded honesty
+ledger. Nothing was published, purchased, or deployed; every market claim traces to a real
+fetched URL or is labeled as an assumption.
 
-An orchestrator agent read [MASTER_PROMPT.md](MASTER_PROMPT.md) and executed the full arc — hunt for pain on the open internet, run an idea tournament with adversarial fact-checking, design the business, build the brand, build the product, make the videos, red-team it, package it. The result is **ReconStock**: a safety-first inventory-sync concept for multi-store Shopify merchants (dry-run by default, diff preview before every write, anomaly circuit-breaker, one-click rollback), priced Free/$29/$49/$99 against a verified $10–60/mo incumbent band.
+## Start here
 
-## The run in numbers
+- **[SERIES.md](SERIES.md)** — what was built, how each was verified, honest weaknesses.
+- **[VERDICT.md](VERDICT.md)** — the three runs judged head-to-head, with a skeptic pass
+  on the verdict itself.
 
-- **8 parallel research lanes** → 20 verified candidate problems → 4 finalists → unanimous 3–0 final vote
-- **Adversarial verification caught real errors**: a misattributed stat and a candidate whose "willingness to pay" traced to synthetic AI-generated evidence — both documented, not hidden
-- **Red team**: 33 attacks, 0 kills, 19 fixes applied, verdict VIABLE-WITH-FIXES
-- **34 automated end-to-end checks** (Playwright) pass against the working product demo and landing page, verified on desktop and mobile
-- **2 videos** produced fully locally (Playwright screen recording + TTS + ffmpeg)
+## The three companies
 
-## See it
+| Rank | Run | Company | One-liner |
+|---|---|---|---|
+| 🥇 | [run-3](run-3/) | **WideTally** | Local-first royalty + ad-ROI ledger for wide self-published authors — parses the KDP/D2D/Kobo/Amazon-Ads report files authors already download, entirely on their machine. $59 once vs $120–348/yr incumbents. Moat: Amazon confirmed in writing there is no KDP API, so every cloud rival scrapes and breaks. |
+| 🥈 | [run-1](run-1/) | **ReconStock** | Shopify inventory sync that shows every change before writing — dry-run, diff preview, anomaly circuit breaker, one-click rollback. |
+| 🥉 | [run-2](run-2/) | **DueCrew** | Compliance deadline guard for solo licensed trade contractors — license/CE/COI/bond expirations with escalating alerts. |
 
-`RECAP.html` doesn't render on github.com — clone and open it locally:
+Each run folder is self-contained: open its `RECAP.html` for the five-minute version, or its
+`README.md` for run-locally instructions.
+
+## Run the demos (Node.js 18+ required)
 
 ```powershell
-git clone https://github.com/omprxkash/autonomous-multimodel-agent
-cd autonomous-multimodel-agent\company-builder\run-1\_tools
-npm install
-npx playwright install chromium
-node verify\server.js
+# WideTally (winner)
+cd run-3
+node serve.js            # product + landing page → http://localhost:8130
+
+# ReconStock
+cd run-1\_tools
+npm install              # first time only (toolchain is not checked in)
+node verify\server.js    # → http://localhost:8123
+
+# DueCrew
+cd run-2\_tools
+npm install              # first time only
+node verify\server.js 8231   # → http://localhost:8231
 ```
 
-Then open:
-- **Recap (start here):** http://localhost:8123/RECAP.html
-- **Product demo:** http://localhost:8123/product/
-- **Landing page:** http://localhost:8123/site/
+Videos are plain MP4s in each run's `video\` folder. To re-run the Playwright verification
+suites or rebuild the videos, see each run's README (`npm install` + `npx playwright install
+chromium` inside that run's `_tools\` first — `node_modules` is intentionally not committed).
 
-Full walkthrough and video/verification rebuild instructions: [run-1/README.md](run-1/README.md).
+## What "verified" means here
 
-## Map
+- Builders self-graded against a definition of done (`run-*/record/gap-analysis.md`).
+- An orchestrating session then independently re-audited runs 2 and 3
+  (`record/orchestrator-audit.md`): drove the demos with Playwright (run-3's import flow
+  parsed 652 rows across 3 real dropped CSVs, zero errors), null-decoded and frame-inspected
+  all videos, link-checked every recap, and re-fetched the load-bearing claims live — all
+  verified verbatim against their sources.
+- Post-verdict, the winner's two weakest evidence points were strengthened with fresh
+  primary sources: [run-3/research/verification-addendum.md](run-3/research/verification-addendum.md).
 
-| Path | What's inside |
-|---|---|
-| [MASTER_PROMPT.md](MASTER_PROMPT.md) | The single prompt that produced everything below |
-| [run-1/RECAP.html](run-1/RECAP.html) | Self-contained recap linking every artifact |
-| [run-1/research/](run-1/research/) | Raw lane findings, candidates, verification, tournament, red team |
-| [run-1/business/](run-1/business/) | Business plan, market research, 30-day launch plan |
-| [run-1/brand/](run-1/brand/) | Name rationale, logo (+ candidates & critique), guidelines, exports |
-| [run-1/product/](run-1/product/) | Working demo app (seeded data, full core workflow) |
-| [run-1/site/](run-1/site/) | Landing page |
-| [run-1/video/](run-1/video/) | launch.mp4, founder.mp4, scripts |
-| [run-1/extras/](run-1/extras/) | Investor teaser, onboarding emails, premortem ("the review we must never earn") |
-| [run-1/record/](run-1/record/) | Decision log, honesty file, gap analysis, verification screenshots |
+## Honest framing
 
-## Honesty
+These are complete **packages**, not live businesses. The demos run on seeded/synthetic data
+(labeled in-product); founders are fictional (disclosed); voiceovers are Windows TTS
+(disclosed in-video). Each run's `record/honesty.md` lists everything simulated, assumed, or
+unverifiable. The constraint set — no paid APIs, no publishing, no spending — is part of the
+experiment's design, and the runs were built through repeated spend-limit terminations by
+resuming from disk state (also disclosed).
 
-This is a concept package, not a live business: the product demo runs on seeded data (no Shopify connection), the founder is fictional and labeled, the voiceover is TTS, and domains were checked but never bought. Every market claim traces to a fetched URL or is disclosed as an assumption — see [run-1/record/honesty.md](run-1/record/honesty.md).
+*Built 2026-07-11 → 2026-07-13, autonomously, from a single prompt per run.*

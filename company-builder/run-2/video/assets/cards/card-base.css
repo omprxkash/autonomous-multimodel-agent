@@ -1,0 +1,30 @@
+/* Shared title-card styles (1280x720 recording target) */
+:root{
+  --ink:#101B2C; --navy700:#1B2B45; --paper:#F7F5F0;
+  --amber:#F5A623; --act:#D64545; --good:#2E9E5B;
+  --slate400:#8A94A6; --slate600:#55617A;
+  --sans:"Segoe UI",-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:Consolas,"SF Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{
+  font-family:var(--sans);background:var(--ink);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  background-image:linear-gradient(rgba(27,43,69,.4) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(27,43,69,.4) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.card-stage{max-width:980px;padding:0 60px;text-align:center}
+h1{font-weight:800;letter-spacing:-.02em;font-size:58px;line-height:1.15}
+h2{font-weight:800;letter-spacing:-.02em;font-size:40px;line-height:1.2}
+.accent{color:var(--amber)}
+.sub{color:var(--slate400);font-size:26px;margin-top:26px;line-height:1.45}
+.small{color:var(--slate600);font-size:18px;margin-top:34px}
+.mono{font-family:var(--mono)}
+.fade{opacity:0;animation:fadeup 1s ease forwards}
+.fade.d1{animation-delay:.25s}.fade.d2{animation-delay:1.15s}.fade.d3{animation-delay:2.1s}.fade.d4{animation-delay:3.1s}
+@keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.brandrow{display:flex;align-items:center;justify-content:center;gap:22px}
+.brandname{font-weight:800;font-size:72px;letter-spacing:-.02em}
+.brandname em{font-style:normal;color:var(--amber)}

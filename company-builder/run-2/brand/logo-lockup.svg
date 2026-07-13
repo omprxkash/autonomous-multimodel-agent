@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 72" width="340" height="72" role="img" aria-label="DueCrew">
+  <!-- Mark tile -->
+  <rect x="4" y="8" width="56" height="56" rx="13" fill="#101B2C"/>
+  <path d="M 21.5 20.3 L 42.5 20.3 L 53 36 L 42.5 51.7 L 21.5 51.7 L 11 36 Z"
+        fill="none" stroke="#F5A623" stroke-width="4.2"
+        stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 23.8 36.6 L 29.9 42.7 L 40.6 30.4"
+        fill="none" stroke="#F5A623" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Wordmark -->
+  <text x="74" y="50" font-family="'Segoe UI', -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="38" font-weight="800" letter-spacing="-0.8">
+    <tspan fill="#F5A623">Due</tspan><tspan fill="#101B2C">Crew</tspan>
+  </text>
+</svg>

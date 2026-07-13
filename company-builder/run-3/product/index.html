@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WideTally — your royalty ledger</title>
+<link rel="icon" href="../brand/logo-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="demo-banner">Demo build · sample library is <strong>synthetic data</strong> (fictional author “R.&nbsp;E.&nbsp;Halloran”) · all parsing happens in this tab — nothing uploads</div>
+
+<header class="app-header">
+  <div class="brand">
+    <img src="../brand/logo-mark.svg" alt="" width="34" height="34">
+    <span class="brand-name">Wide<em>Tally</em></span>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-view="ledger" role="tab">Ledger</button>
+    <button class="tab" data-view="books" role="tab">Books</button>
+    <button class="tab" data-view="ads" role="tab">Ads</button>
+    <button class="tab" data-view="imports" role="tab">Imports <span id="import-count" class="pill" hidden></span></button>
+  </nav>
+  <div class="header-right"><span class="local-dot" title="No network activity — parsing is local"></span>local&nbsp;·&nbsp;offline-ready</div>
+</header>
+
+<main>
+  <!-- ============ LEDGER ============ -->
+  <section id="view-ledger" class="view">
+    <div class="empty-state" data-empty>
+      <h2>Your ledger is empty</h2>
+      <p>Drop royalty report files on the <b>Imports</b> tab — or load the synthetic sample library to look around.</p>
+      <button class="btn btn-primary" data-action="load-samples">Load sample library</button>
+    </div>
+    <div data-full hidden>
+      <div class="stat-row" id="stat-row"></div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Monthly earnings by platform</h2>
+            <p class="card-sub">Net royalties per calendar month · KU = KENP pages × that month’s per-page rate <span class="est">est.</span></p>
+          </div>
+          <div class="legend" id="chart-legend"></div>
+        </div>
+        <div class="chart-wrap"><svg id="chart-monthly" width="100%" height="300" role="img" aria-label="Stacked bar chart of monthly earnings by platform"></svg></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Platforms, trailing 12 months</h2></div>
+        <table class="data-table" id="platform-table"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOOKS ============ -->
+  <section id="view-books" class="view" hidden>
+    <div class="empty-state" data-empty><h2>No books yet</h2><p>Import files to see per-book and per-series earnings.</p><button class="btn btn-primary" data-action="load-samples">Load sample library</button></div>
+    <div data-full hidden>
+      <div class="card">
+        <div class="card-head">
+          <div><h2>Books &amp; series, trailing 12 months</h2>
+          <p class="card-sub">The view KDP doesn’t have: every store, one row per book, series roll-ups. <span class="est">est.</span> marks KU estimates.</p></div>
+        </div>
+        <table class="data-table" id="books-table"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADS ============ -->
+  <section id="view-ads" class="view" hidden>
+    <div class="empty-state" data-empty><h2>No ad reports yet</h2><p>Import an Amazon Ads campaign CSV to see royalty-true ad math.</p><button class="btn btn-primary" data-action="load-samples">Load sample library</button></div>
+    <div data-full hidden>
+      <div class="card explainer">
+        <h2>Why your ACOS is lying to you</h2>
+        <p>Amazon Ads reports <b>ACOS against sale price</b>. But you don’t earn the sale price — you earn a royalty. WideTally recomputes every campaign against <b>what you actually keep</b> (70% ebook royalty, minus delivery, plus KU read-through where it applies<span class="est">est.</span>).</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Campaigns, trailing 12 months</h2></div>
+        <table class="data-table" id="ads-table"></table>
+        <p class="footnote" id="ads-footnote"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMPORTS ============ -->
+  <section id="view-imports" class="view" hidden>
+    <div class="card dropzone" id="dropzone" tabindex="0">
+      <div class="dz-inner">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none" aria-hidden="true">
+          <rect x="7" y="4" width="32" height="38" rx="3" stroke="#5B6B7C" stroke-width="2"/>
+          <path d="M15 14h16M15 21h16M15 28h9" stroke="#5B6B7C" stroke-width="2" stroke-linecap="round"/>
+          <path d="M31 30v10m0-10l-4 4m4-4l4 4" stroke="#B8862D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" transform="rotate(180 33 35)"/>
+        </svg>
+        <h2>Drop report files here</h2>
+        <p>KDP royalties &amp; KENP · Draft2Digital · Kobo · Amazon Ads (CSV)</p>
+        <p class="dz-note">Files are read by <em>this page, on this machine</em>. No upload, no account, no server.</p>
+        <div class="dz-actions">
+          <label class="btn btn-outline">Choose files<input type="file" id="file-input" multiple accept=".csv" hidden></label>
+          <button class="btn btn-primary" data-action="load-samples">Load sample library</button>
+          <button class="btn btn-ghost" data-action="reset" id="reset-btn" hidden>Clear ledger</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="imports-card" hidden>
+      <div class="card-head"><h2>Imported files</h2></div>
+      <table class="data-table" id="imports-table"></table>
+    </div>
+    <div class="card muted-card">
+      <h3>How detection works</h3>
+      <p>WideTally fingerprints the header row of each file against its <b>format registry</b> — the same registry we publish openly. When a store changes its export, the registry updates and your app tells you. Formats it already knows keep working offline, forever.</p>
+    </div>
+  </section>
+</main>
+
+<div id="tooltip" class="tooltip" hidden></div>
+<footer class="app-footer">WideTally demo · synthetic sample data · <a href="../site/index.html">about WideTally</a></footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DueCrew — Investor Teaser</title>
+<style>
+  :root{--ink:#101B2C;--navy700:#1B2B45;--paper:#F7F5F0;--amber:#F5A623;--amber600:#D98E0B;
+    --act:#D64545;--slate4:#8A94A6;--slate6:#55617A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",-apple-system,Roboto,Arial,sans-serif;background:#DDD9D0;color:var(--ink);line-height:1.5;font-size:15px}
+  .page{max-width:880px;margin:24px auto;background:var(--paper);box-shadow:0 10px 40px rgba(0,0,0,.2)}
+  @media print{body{background:#fff}.page{margin:0;box-shadow:none;max-width:none}}
+  .band{background:var(--ink);color:var(--paper);padding:34px 48px;display:flex;justify-content:space-between;align-items:center}
+  .band h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .band h1 em{font-style:normal;color:var(--amber)}
+  .band p{color:var(--slate4);font-size:14px;max-width:420px}
+  .body{padding:34px 48px 42px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--amber600);font-weight:800;margin:22px 0 8px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+  .full{grid-column:1/-1}
+  .stat-row{display:flex;gap:14px;margin:6px 0 4px;flex-wrap:wrap}
+  .stat{flex:1;min-width:150px;background:#fff;border:1px solid #E3DED2;border-radius:8px;padding:12px 16px}
+  .stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .stat span{font-size:12px;color:var(--slate6)}
+  ul{margin:4px 0 4px 18px}
+  li{margin:4px 0}
+  .risk{background:#fff;border-left:4px solid var(--act);border:1px solid #E3DED2;border-left:4px solid var(--act);border-radius:8px;padding:14px 18px;margin-top:6px}
+  .risk li{font-size:13.5px;color:var(--slate6)}
+  .src{font-size:11px;color:var(--slate6);margin-top:26px;border-top:1px solid #E3DED2;padding-top:12px}
+  .src p{word-break:break-all}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="band">
+    <div>
+      <h1><em>Due</em>Crew</h1>
+      <p>Compliance deadline guard for America's solo licensed trades — license renewals,
+      CE hours, insurance and bond dates on one red/amber/green board.</p>
+    </div>
+    <div style="text-align:right;font-size:13px;color:var(--slate4)">Pre-launch · seeking feedback, not funds<br>duecrew.com (unregistered, checked 2026-07-12)</div>
+  </div>
+  <div class="body">
+    <div class="grid">
+      <div class="full">
+        <h2>The problem, in the regulator's words</h2>
+        <p>"Any work performed while the license is expired is considered to be
+        <strong>unlicensed</strong> and disciplinary action can be taken against you" — CSLB.
+        One documented COI lapse: <strong>11 days off the job, $47,000 withheld</strong>
+        (Texas agency client account). The people most exposed — solo electricians, plumbers,
+        HVAC techs — have no office manager and reject field-service suites as overbuilt.
+        Their system today is a glovebox and memory.</p>
+        <div class="stat-row">
+          <div class="stat"><b>1.76M</b><span>workers in the 3 core licensed trades (BLS May 2025)</span></div>
+          <div class="stat"><b>~2.88M</b><span>no-employee construction businesses (Census 2022, directional)</span></div>
+          <div class="stat"><b>$54M</b><span>PermitFlow Series B (Dec 2025) — compliance-adjacent heat, GC-side</span></div>
+          <div class="stat"><b>~$99M</b><span>SAM at $99/yr × ~1M solo licensees (inference, stated assumptions)</span></div>
+        </div>
+      </div>
+      <div>
+        <h2>Product</h2>
+        <ul>
+          <li>Status board: every credential, days-left, Good/Watch/Act</li>
+          <li>Escalating SMS/email alerts, 90 days → day-before</li>
+          <li>CE ledger vs. actual state requirements (TX verified v0.1)</li>
+          <li>COI locker + live share link (GC-facing viral loop)</li>
+          <li>Registry monitoring beta — verification, not just reminders</li>
+        </ul>
+        <h2>Wedge</h2>
+        <p>Every funded player in contractor compliance sells to the GC to police subs.
+        DueCrew is the sub's side of the table. The maintained per-state per-trade rules
+        dataset compounds; it powers both product and 150-page SEO funnel.</p>
+      </div>
+      <div>
+        <h2>Model</h2>
+        <ul>
+          <li>Solo $12/mo · $99/yr; Crew $29/mo; founding lifetime $199 × 200</li>
+          <li>>90% gross margin; SMS + rules-maintenance are the only real COGS</li>
+          <li>GTM: CE-provider partnerships, printable "Lapse Math" lead magnet, state-page SEO, trade forums</li>
+        </ul>
+        <h2>Falsification test</h2>
+        <p>If 200 founding seats don't sell to real tradespeople in ~90 days, the thesis
+        fails. That test costs almost nothing to run.</p>
+      </div>
+      <div class="full">
+        <h2>What the red team says (we wrote it down)</h2>
+        <div class="risk">
+          <ul>
+            <li><strong>Moat is speed, not structure</strong> — the reminder primitive is a weekend build; the dataset is months to copy (R1/R2).</li>
+            <li><strong>WTP unproven</strong> — no customer interviews were possible in this exercise; founding-seat sales are the designed test (R3).</li>
+            <li><strong>Annual value events risk seasonal churn</strong> — weekly COI utility and monthly CE touch are mitigations, unproven (R4).</li>
+            <li><strong>Rules-data liability</strong> — a stale rule is a real failure mode; every row ships with source + last-verified date (R5).</li>
+            <li><strong>$47k anchor is a vendor anecdote</strong> — real page, labeled as agency client account; replace with first-party story post-launch (R9).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="src">
+      <h2 style="margin-top:0">Sources (all fetched during research, 2026-07-12/13)</h2>
+      <p>cslb.ca.gov/Contractors/Maintain_License/Renew_License/Failing_To_Renew_Your_License.aspx ·
+      cslb.ca.gov/contractors/journeymen/journeymen_unlicensed_consequences.aspx ·
+      theagentsoffice.com/certificate-of-insurance-mistakes-texas-contractors ·
+      tdlr.texas.gov/electricians/elecce.htm · skilledtradesiq.com/salaries/bls-2025-oews-release (BLS OEWS reprint) ·
+      jobstackcrm.com/research/trades-statistics (Census reprint, directional) ·
+      businesswire.com PermitFlow Series B release. Full verification log with confidence
+      flags: research/verification.md. DueCrew is a fictional pre-launch company built as a
+      business-building exercise; figures marked inference are arithmetic, not claims.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

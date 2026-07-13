@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WideTally — every store, one ledger, your machine</title>
+<meta name="description" content="WideTally reads the royalty reports you already download from KDP, Draft2Digital, Kobo and more — entirely on your machine — and shows what each book actually earns after ads. $59 once. No subscription, no login, no upload.">
+<link rel="icon" href="../brand/logo-mark.svg" type="image/svg+xml">
+<style>
+* { box-sizing: border-box; margin: 0; }
+:root { --ink:#16324F; --paper:#FAF6EF; --brass:#B8862D; --brass-dark:#D9A93F; --slate:#5B6B7C; --line:#E5DCC9; --hover:#F3ECDD; --green:#1E7A46; --red:#A63A2B;
+  --sans:'Segoe UI', system-ui, -apple-system, sans-serif; --serif:Georgia,'Iowan Old Style','Times New Roman',serif; }
+html { background: var(--paper); scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+a { color: var(--brass); }
+h1, h2, h3 { font-family: var(--serif); font-weight: normal; }
+.eyebrow { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--slate); }
+
+header.nav { display: flex; align-items: center; gap: 14px; padding: 18px 0; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand-name { font-family: var(--serif); font-size: 24px; }
+.brand-name em { font-style: normal; color: var(--brass); }
+.nav-links { margin-left: auto; display: flex; gap: 22px; font-size: 15px; }
+.nav-links a { color: var(--ink); text-decoration: none; }
+.nav-links a:hover { color: var(--brass); }
+
+.hero { padding: 64px 0 40px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: 46px; line-height: 1.12; }
+.hero h1 .brass { color: var(--brass); }
+.hero .sub { margin: 20px 0 28px; font-size: 19px; color: var(--slate); max-width: 46ch; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.btn { display: inline-block; font: 600 16px var(--sans); border-radius: 8px; padding: 13px 26px; cursor: pointer; text-decoration: none; }
+.btn-primary { background: var(--brass); color: var(--paper); border: none; }
+.btn-primary:hover { background: #A57724; }
+.btn-outline { border: 1.5px solid var(--ink); color: var(--ink); background: none; }
+.cta-note { font-size: 13.5px; color: var(--slate); width: 100%; }
+
+.ledger-art { border: 1px solid var(--line); border-radius: 12px; background: #fffdf8; padding: 10px; box-shadow: 0 2px 8px rgba(22,50,79,.08); }
+.ledger-art svg { display: block; width: 100%; height: auto; }
+
+.strip { background: var(--ink); color: var(--paper); padding: 46px 0; }
+.strip h2 { font-size: 27px; margin-bottom: 26px; }
+.quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.q { border-left: 3px solid var(--brass-dark); padding-left: 16px; font-size: 15.5px; }
+.q p { font-style: italic; }
+.q cite { display: block; margin-top: 10px; font-style: normal; font-size: 13px; color: #B9C4D0; }
+.q cite a { color: var(--brass-dark); }
+.strip .foot { margin-top: 22px; font-size: 13px; color: #B9C4D0; }
+
+section.block { padding: 64px 0; }
+.block h2 { font-size: 32px; margin-bottom: 10px; }
+.block .lead { color: var(--slate); max-width: 62ch; margin-bottom: 34px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.feature { border: 1px solid var(--line); border-radius: 10px; padding: 22px; background: var(--paper); box-shadow: 0 1px 2px rgba(22,50,79,.06); }
+.feature h3 { font-size: 19px; margin: 10px 0 8px; }
+.feature p { font-size: 15px; color: var(--slate); }
+.fx { width: 40px; height: 40px; }
+
+.how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+.how .step { padding: 22px; border: 1px solid var(--line); border-radius: 10px; }
+.how .step::before { counter-increment: step; content: counter(step); font-family: var(--serif); font-size: 34px; color: var(--brass); display: block; }
+.how h3 { font-size: 18px; margin: 6px 0; }
+.how p { font-size: 15px; color: var(--slate); }
+
+table.compare { width: 100%; border-collapse: collapse; font-size: 15px; }
+.compare th { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); text-align: left; padding: 10px; border-bottom: 2px solid var(--line); }
+.compare td { padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.compare .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.compare .you { background: #F6F0E3; }
+.compare .you td:first-child { font-weight: 600; }
+.compare-note { font-size: 13px; color: var(--slate); margin-top: 12px; }
+.table-scroll { overflow-x: auto; }
+
+.price-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+.price { border: 1px solid var(--line); border-radius: 12px; padding: 28px 24px; display: flex; flex-direction: column; }
+.price.hot { border: 2px solid var(--brass); position: relative; }
+.price.hot::before { content: "the one to buy"; position: absolute; top: -11px; left: 22px; background: var(--brass); color: var(--paper); font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-radius: 5px; padding: 2px 9px; }
+.price h3 { font-size: 20px; }
+.price .amount { font-size: 42px; font-variant-numeric: tabular-nums; margin: 8px 0 2px; }
+.price .per { font-size: 14px; color: var(--slate); }
+.price ul { margin: 18px 0 24px; padding-left: 20px; font-size: 15px; color: var(--slate); flex: 1; }
+.price li { margin-bottom: 8px; }
+.price .btn { text-align: center; }
+
+.privacy { background: #fffdf8; border: 1px solid var(--line); border-radius: 12px; padding: 34px; display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; }
+.privacy h2 { font-size: 26px; margin-bottom: 8px; }
+.privacy p { color: var(--slate); font-size: 15.5px; max-width: 70ch; }
+
+.faq details { border-bottom: 1px solid var(--line); padding: 16px 4px; }
+.faq summary { font-weight: 600; cursor: pointer; font-size: 16.5px; }
+.faq p { margin-top: 10px; color: var(--slate); font-size: 15.5px; max-width: 75ch; }
+
+footer.site { border-top: 1px solid var(--line); padding: 30px 0 40px; font-size: 13.5px; color: var(--slate); }
+footer.site .cols { display: flex; gap: 40px; flex-wrap: wrap; justify-content: space-between; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-top: 36px; gap: 30px; }
+  .hero h1 { font-size: 34px; }
+  .quotes, .feature-grid, .how, .price-cards { grid-template-columns: 1fr; }
+  .privacy { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  section.block { padding: 44px 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="#"><img src="../brand/logo-mark.svg" alt="WideTally" width="34" height="34"><span class="brand-name">Wide<em>Tally</em></span></a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a><a href="#compare">Compare</a><a href="#pricing">Pricing</a><a href="../product/index.html">Live demo</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">For self-published authors who sell wide</p>
+      <h1>Every store. One ledger. <span class="brass">Your machine.</span></h1>
+      <p class="sub">WideTally reads the royalty reports you already download — KDP, Draft2Digital, Kobo, Amazon Ads — and shows what every book actually earns after ads. Nothing uploads. No password. No subscription.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="../product/index.html">Try the live demo</a>
+        <a class="btn btn-outline" href="#pricing">$59, once</a>
+        <p class="cta-note">The demo runs on synthetic sample data and parses files entirely in your browser — exactly like the product, because it is the product.</p>
+      </div>
+    </div>
+    <div class="ledger-art">
+      <!-- hand-authored SVG: mini ledger illustration -->
+      <svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of WideTally's ledger view">
+        <rect width="520" height="360" fill="#FAF6EF"/>
+        <text x="24" y="38" font-family="Georgia,serif" font-size="20" fill="#16324F">June 2026</text>
+        <text x="496" y="38" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="20" fill="#16324F">$2,412</text>
+        <line x1="24" y1="52" x2="496" y2="52" stroke="#E5DCC9" stroke-width="1.5"/>
+        <!-- bars -->
+        <g>
+          <rect x="40" y="196" width="34" height="104" fill="#2E6EB5" rx="3"/><rect x="40" y="166" width="34" height="28" fill="#B8862D"/><rect x="40" y="136" width="34" height="28" fill="#6B5CA5"/><rect x="40" y="112" width="34" height="22" fill="#0B9377" rx="3"/>
+          <rect x="94" y="206" width="34" height="94" fill="#2E6EB5" rx="3"/><rect x="94" y="180" width="34" height="24" fill="#B8862D"/><rect x="94" y="152" width="34" height="26" fill="#6B5CA5"/><rect x="94" y="132" width="34" height="18" fill="#0B9377" rx="3"/>
+          <rect x="148" y="150" width="34" height="150" fill="#2E6EB5" rx="3"/><rect x="148" y="112" width="34" height="36" fill="#B8862D"/><rect x="148" y="76" width="34" height="34" fill="#6B5CA5"/><rect x="148" y="52" width="34" height="22" fill="#0B9377" rx="3"/>
+          <rect x="202" y="188" width="34" height="112" fill="#2E6EB5" rx="3"/><rect x="202" y="158" width="34" height="28" fill="#B8862D"/><rect x="202" y="128" width="34" height="28" fill="#6B5CA5"/><rect x="202" y="106" width="34" height="20" fill="#0B9377" rx="3"/>
+        </g>
+        <line x1="24" y1="300" x2="496" y2="300" stroke="#5B6B7C" stroke-width="1"/>
+        <!-- ledger lines right side -->
+        <g font-family="Segoe UI,sans-serif" font-size="13" fill="#16324F">
+          <text x="268" y="120">Harbor of Lost Things</text><text x="496" y="120" text-anchor="end">$948</text>
+          <text x="268" y="150">The Driftwood Casket</text><text x="496" y="150" text-anchor="end">$517</text>
+          <text x="268" y="180">Ironvale: The Hollow King</text><text x="496" y="180" text-anchor="end">$402</text>
+          <text x="268" y="210" fill="#5B6B7C">Amazon Ads</text><text x="496" y="210" text-anchor="end" fill="#A63A2B">−$489</text>
+          <line x1="268" y1="226" x2="496" y2="226" stroke="#E5DCC9"/>
+          <text x="268" y="250" font-weight="600">Net</text><text x="496" y="250" text-anchor="end" font-weight="600" fill="#1E7A46">$1,923</text>
+        </g>
+        <g font-family="Segoe UI,sans-serif" font-size="11.5" fill="#5B6B7C">
+          <text x="57" y="318" text-anchor="middle">Mar</text><text x="111" y="318" text-anchor="middle">Apr</text><text x="165" y="318" text-anchor="middle">May</text><text x="219" y="318" text-anchor="middle">Jun</text>
+        </g>
+        <g font-size="11.5" font-family="Segoe UI,sans-serif">
+          <rect x="268" y="330" width="10" height="10" fill="#2E6EB5" rx="2"/><text x="283" y="339" fill="#16324F">Amazon</text>
+          <rect x="345" y="330" width="10" height="10" fill="#B8862D" rx="2"/><text x="360" y="339" fill="#16324F">D2D</text>
+          <rect x="410" y="330" width="10" height="10" fill="#6B5CA5" rx="2"/><text x="425" y="339" fill="#16324F">KU</text>
+          <rect x="455" y="330" width="10" height="10" fill="#0B9377" rx="2"/><text x="470" y="339" fill="#16324F">Kobo</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <h2>The problem, in authors’ own words</h2>
+    <div class="quotes">
+      <div class="q"><p>“On average it takes me 15 minutes to adequately review all sales platforms… If done every day, that would equate to 92 hours a year wasted.”</p>
+        <cite>Dave Chesson, <a href="https://kindlepreneur.com/book-sales-tracker/">Kindlepreneur</a></cite></div>
+      <div class="q"><p>“Started publishing 10 years ago … 18 books out … still refresh my sales page about a dozen times a day.”</p>
+        <cite>Author, <a href="https://old.reddit.com/r/selfpublish/comments/1s02ax0/anyone_else_constantly_refreshing_their_kdp/">r/selfpublish, Mar 2026</a></cite></div>
+      <div class="q"><p>“Many times I myself have tried to open the program to see my data and got nothing.”</p>
+        <cite>Kindlepreneur, <a href="https://kindlepreneur.com/scribecount-review/">reviewing the leading wide-author tracker</a></cite></div>
+    </div>
+    <p class="foot">Public statements from independent sources describing the problem space — not WideTally testimonials. Each links to where it was said.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="block" id="how">
+    <h2>How it works</h2>
+    <p class="lead">There is no Amazon API for author royalties — Amazon has said so themselves. Every tracker ultimately lives off the report files you can already download. WideTally just skips the part where your income data visits someone else’s server.</p>
+    <div class="how">
+      <div class="step"><h3>Download your reports</h3><p>The same KDP, Draft2Digital, Kobo and Amazon Ads files you already export. You keep doing what you do — no new logins, no browser extension watching your dashboard.</p></div>
+      <div class="step"><h3>Drop them on WideTally</h3><p>Format detection is automatic, against a registry we publish openly. Parsing happens on your machine — flight-mode friendly.</p></div>
+      <div class="step"><h3>Read your one ledger</h3><p>Per-book, per-series, per-store earnings. KU pages priced at the month’s rate. Ad spend set against the royalties it actually bought.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>What you get</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <svg class="fx" viewBox="0 0 40 40" fill="none"><rect x="4" y="6" width="32" height="28" rx="3" stroke="#16324F" stroke-width="2"/><path d="M10 26l6-7 5 4 8-10" stroke="#B8862D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>The series view KDP doesn’t have</h3><p>“Dividing your books up by series” is exactly what Amazon’s dashboard can’t do — so WideTally leads with it. Series roll-ups, read-through at a glance.</p>
+      </div>
+      <div class="feature">
+        <svg class="fx" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#16324F" stroke-width="2"/><path d="M20 12v8l6 4" stroke="#B8862D" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>The 15-minute ritual, retired</h3><p>One glance replaces the morning tour of five dashboards. Month trends, best store per title, release spikes — pre-computed from your own files.</p>
+      </div>
+      <div class="feature">
+        <svg class="fx" viewBox="0 0 40 40" fill="none"><path d="M8 32V12m8 20V8m8 24V16m8 16V20" stroke="#16324F" stroke-width="2.5" stroke-linecap="round"/><path d="M6 34h28" stroke="#B8862D" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>Ad math against royalties, not list price</h3><p>ACOS compares spend to sale price you don’t keep. WideTally recomputes every campaign against your actual royalty — and tells you when KU read-through changes the verdict.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="compare">
+    <h2>An honest comparison</h2>
+    <p class="lead">Prices below were verified from public sources in July 2026 (links in our research notes). We’ve included the one tool that tried local-first before us — it stopped updating in 2019, which tells you what the hard part of this business is. Our answer to that is the <b>Format Updates Pass</b>.</p>
+    <div class="table-scroll">
+    <table class="compare">
+      <thead><tr><th>Tool</th><th>Model</th><th class="num">Cost, 3 years</th><th>Your data</th><th>Amazon-only?</th></tr></thead>
+      <tbody>
+        <tr class="you"><td>WideTally</td><td>Local app, file-based</td><td class="num">$97</td><td>Stays on your machine</td><td>No — KDP, D2D, Kobo + more</td></tr>
+        <tr><td>ScribeCount</td><td>Cloud subscription</td><td class="num">$555</td><td>On their servers</td><td>No</td></tr>
+        <tr><td>Publisher Champ</td><td>Cloud subscription</td><td class="num">~$549</td><td>On their servers</td><td>No</td></tr>
+        <tr><td>PublishWide</td><td>Cloud subscription</td><td class="num">$1,044</td><td>On their servers</td><td>No</td></tr>
+        <tr><td>Book Report</td><td>Browser extension</td><td class="num">$0 – $8,964*</td><td>Reads your KDP session</td><td>Yes</td></tr>
+        <tr><td>TrackerBox (2019)</td><td>Local desktop</td><td class="num">one-time</td><td>Local</td><td>No — but unmaintained since 2019</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="compare-note">*Book Report is free under $1,000/mo in royalties, then income-tiered up to $249/mo. 3-year figures assume list prices as verified July 2026; annual-discount options noted in our pricing notes. WideTally = $59 license + two $19 optional update passes.</p>
+  </section>
+
+  <section class="block" id="pricing">
+    <h2>Pricing</h2>
+    <p class="lead">You buy software, you own software. The only recurring thing is the one part that has recurring cost: keeping parsers current when stores change their files. That’s optional, and your app never breaks retroactively.</p>
+    <div class="price-cards">
+      <div class="price">
+        <h3>WideTally Lite</h3>
+        <div class="amount">$0</div><div class="per">forever, not a trial</div>
+        <ul><li>Every feature, up to 2 books</li><li>All parsers, all charts</li><li>No account. No time limit.</li></ul>
+        <a class="btn btn-outline" href="../product/index.html">Try the demo</a>
+      </div>
+      <div class="price hot">
+        <h3>WideTally License</h3>
+        <div class="amount">$59</div><div class="per">once · includes 12 months of format updates</div>
+        <ul><li>Unlimited books &amp; pen names</li><li>KDP, KENP, D2D, Kobo, Amazon Ads today — registry keeps growing</li><li>CSV export of everything, anytime</li><li>Yours forever. Formats it knows keep working offline, forever.</li></ul>
+        <a class="btn btn-primary" href="../product/index.html">See it work first</a>
+      </div>
+      <div class="price">
+        <h3>Format Updates Pass</h3>
+        <div class="amount">$19</div><div class="per">per year after year one · optional</div>
+        <ul><li>New and changed store formats</li><li>New parsers as they ship (IngramSpark and ACX are next)</li><li>Skip a year? Nothing you have stops working.</li></ul>
+        <a class="btn btn-outline" href="#faq">How this works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="privacy">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true"><rect x="14" y="30" width="44" height="32" rx="5" stroke="#16324F" stroke-width="3"/><path d="M24 30v-8a12 12 0 0124 0v8" stroke="#16324F" stroke-width="3"/><circle cx="36" cy="45" r="4.5" fill="#B8862D"/><path d="M36 49v6" stroke="#B8862D" stroke-width="3" stroke-linecap="round"/></svg>
+      <div>
+        <h2>Your income is nobody’s dataset</h2>
+        <p>WideTally never asks for your KDP password, never reads your browser session, never sees a number. Verify it yourself: open your system’s network monitor while you work — there’s nothing to find. The parsers will be published source-available, and releases are checksummed. Privacy claims you can test beat privacy claims you have to trust.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block faq" id="faq">
+    <h2>Questions authors actually ask</h2>
+    <details open><summary>Why not just connect to my accounts like other tools?</summary>
+      <p>Because there’s nothing to connect <em>to</em>. Amazon confirmed in writing (Oct 2025) that no API returns KDP data. Tools that “connect” are scraping dashboards or riding a browser extension on your logged-in session — which is why they break, log you out, and ask you to re-authenticate. The report files are the ground truth. You already have them.</p></details>
+    <details><summary>Is my Kindle Unlimited income exact?</summary>
+      <p>No — and it isn’t exact in any tool, because Amazon announces the per-page rate <em>after</em> the month ends. WideTally prices pages at the published rate once it’s out and labels everything before that “est.” We’d rather show you a labeled estimate than an unlabeled guess.</p></details>
+    <details><summary>What happens when a store changes its report format?</summary>
+      <p>Our format registry — which we publish openly — gets updated, usually within days, and your app picks up the new parser with the Updates Pass. Formats your app already knows are parsed locally forever, pass or no pass. This is the actual hard part of this product; we priced it honestly instead of hiding it in a subscription.</p></details>
+    <details><summary>Which platforms at launch?</summary>
+      <p>Amazon KDP (royalties, orders, KENP), Amazon Ads campaign exports, Draft2Digital, and Kobo Writing Life. Next on the registry: IngramSpark, ACX/Audible, Google Play, Apple. If you can export it, we can learn to read it.</p></details>
+    <details><summary>Mac? Windows? Phone?</summary>
+      <p>WideTally runs anywhere a modern browser runs, as a local app — including fully offline once installed. Your ledger is a folder of files you can back up, sync, or move like anything else you own.</p></details>
+    <details><summary>Is this a subscription in disguise?</summary>
+      <p>No. $59 buys the app outright. The $19/yr pass only buys <em>future</em> format changes. If you never renew, everything you bought keeps working on every file format it shipped with. Compare: three years of the cheapest cloud tracker costs more than five times as much.</p></details>
+  </section>
+</div>
+
+<footer class="site">
+  <div class="wrap cols">
+    <div><span class="brand-name" style="font-size:19px">Wide<em style="font-style:normal;color:var(--brass)">Tally</em></span><br>Every store. One ledger. Your machine.</div>
+    <div>Demo project — WideTally is a fictional company built as a research exercise.<br>All quotes link to their public sources. Sample data is synthetic.</div>
+    <div><a href="../product/index.html">Live demo</a> · <a href="../business/format-registry.md">Format registry</a> · <a href="../RECAP.html">Project recap</a></div>
+  </div>
+</footer>
+</body>
+</html>
